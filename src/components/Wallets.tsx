@@ -1,4 +1,4 @@
-import { RotateCw, Plus, Search, ChevronDown, Wallet as WalletIcon, Edit, Trash2, ExternalLink, Receipt } from "lucide-react";
+import { RotateCw, Plus, Search, ChevronDown, Wallet as WalletIcon, Edit, Trash2, ExternalLink, Receipt, Layers, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -8,6 +8,8 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import { AddWalletForm } from "./AddWalletForm";
 import { EditWalletForm } from "./EditWalletForm";
 import { ImportCsvModal } from "./ImportCsvModal";
+import { AddAssetModal, type AssetItem } from "./AddAssetModal";
+import { AssetDetailsModal } from "./AssetDetailsModal";
 
 import { Wallet } from "@/hooks/useWallets";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -29,7 +31,17 @@ const convertToNOK = (cryptoValue: number, blockchain: string) => {
 
 const Wallets = () => {
   const { t } = useLanguage();
+  const [activeTab, setActiveTab] = useState<'wallets' | 'assets'>('wallets');
   const [showEmptyWallets, setShowEmptyWallets] = useState(false);
+  const [showAddAsset, setShowAddAsset] = useState(false);
+  const [assets, setAssets] = useState<AssetItem[]>([
+    { id: 'a1', name: 'BoredApe #1234', type: 'NFT', network: 'Ethereum', quantity: 1, valueNok: 420000, imageUrl: 'https://picsum.photos/seed/ape/300/200' },
+    { id: 'a2', name: 'USDC', type: 'Token', network: 'Ethereum', quantity: 12500, valueNok: 130000, imageUrl: 'https://picsum.photos/seed/usdc/300/200' },
+    { id: 'a3', name: 'Custom Asset', type: 'Custom', network: 'Polygon', quantity: 5000, valueNok: 25000, imageUrl: 'https://picsum.photos/seed/custom/300/200' },
+    { id: 'a4', name: 'Cool NFT #77', type: 'NFT', network: 'Ethereum', quantity: 1, valueNok: 95000, imageUrl: 'https://picsum.photos/seed/cool/300/200' },
+  ]);
+  const [showAssetDetails, setShowAssetDetails] = useState(false);
+  const [selectedAsset, setSelectedAsset] = useState<AssetItem | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("highest-market-value");
   const [showAddWallet, setShowAddWallet] = useState(false);
@@ -87,7 +99,7 @@ const Wallets = () => {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
+      {/* Header + Tabs */}
       <div className="flex items-center justify-between">
         <div className="flex gap-3">
           <Button 
@@ -125,9 +137,24 @@ const Wallets = () => {
             {t('wallets.importCsv')}
           </Button>
         </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setActiveTab('wallets')}
+            className={`px-4 py-2 rounded-md text-sm border font-medium ${activeTab==='wallets' ? 'border-orange-500 text-orange-600 bg-orange-50' : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800'}`}
+          >
+            {t('wallets.tab.wallets')}
+          </button>
+          <button
+            onClick={() => setActiveTab('assets')}
+            className={`px-4 py-2 rounded-md text-sm border font-medium ${activeTab==='assets' ? 'border-orange-500 text-orange-600 bg-orange-50' : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800'}`}
+          >
+            {t('wallets.tab.assets')}
+          </button>
+        </div>
       </div>
 
-      {/* Search and Sort */}
+      {/* Search and Sort (wallets tab only) */}
+      {activeTab==='wallets' && (
       <div className="flex gap-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
@@ -149,7 +176,9 @@ const Wallets = () => {
           </SelectContent>
         </Select>
       </div>
+      )}
 
+      {activeTab==='wallets' ? (
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left Column - Wallets List */}
         <div className="space-y-6">
@@ -378,6 +407,64 @@ const Wallets = () => {
           )}
         </div>
       </div>
+      ) : (
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{t('assets.title')}</h3>
+            <Button className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white" onClick={() => setShowAddAsset(true)}>
+              <Layers size={16} />
+              {t('assets.addAsset')}
+            </Button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {assets.map((a) => (
+              <div key={a.id} className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden bg-white dark:bg-gray-800 shadow-sm">
+                {a.imageUrl && (
+                  <img src={a.imageUrl} alt={a.name} className="w-full h-40 object-cover" />
+                )}
+                <div className="p-4">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <div className="text-lg font-semibold text-gray-900 dark:text-white">{a.name}</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">{a.type} • {a.network}</div>
+                    </div>
+                    <button
+                      onClick={() => { setSelectedAsset(a); setShowAssetDetails(true); }}
+                      className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
+                      title={t('assets.moreInfo')}
+                    >
+                      <MoreHorizontal size={16} />
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between mt-3">
+                    <div className="text-sm text-gray-500 dark:text-gray-400">{t('assets.quantity')}</div>
+                    <div className="text-sm text-gray-900 dark:text-white">{a.quantity.toLocaleString()}</div>
+                  </div>
+                  <div className="flex items-center justify-between mt-1">
+                    <div className="text-sm text-gray-500 dark:text-gray-400">{t('assets.value')}</div>
+                    <div className="text-sm text-gray-900 dark:text-white">NOK {a.valueNok.toLocaleString()}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Add Asset Modal */}
+      <AddAssetModal
+        isOpen={showAddAsset}
+        onClose={() => setShowAddAsset(false)}
+        onAdd={(asset) => setAssets(prev => [asset, ...prev])}
+      />
+
+      {/* Asset Details Modal */}
+      <AssetDetailsModal
+        isOpen={showAssetDetails}
+        asset={selectedAsset}
+        onClose={() => setShowAssetDetails(false)}
+        onDelete={(id) => setAssets(prev => prev.filter(a => a.id !== id))}
+      />
 
       {/* Add Wallet Modal */}
       {showAddWallet && (

@@ -1,12 +1,19 @@
 
 import { Search, Star } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Prices = () => {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState("all");
+  const [favorites, setFavorites] = useState<Set<string>>(() => {
+    try {
+      const raw = localStorage.getItem('favoriteSymbols');
+      if (raw) return new Set(JSON.parse(raw));
+    } catch {}
+    return new Set();
+  });
 
   const cryptoPrices = [
     {
@@ -360,6 +367,57 @@ const Prices = () => {
     { name: "Rocket Pool", symbol: "RPL", price: "NOK 236.41", marketCap: "NOK 47B", volume24h: "NOK 360M", circulatingSupply: "200 000 000", change24h: "+1.20%", changeColor: "text-green-600", bgColor: "bg-orange-700", icon: "R" },
     { name: "dYdX", symbol: "DYDX", price: "NOK 23.40", marketCap: "NOK 52B", volume24h: "NOK 1.1B", circulatingSupply: "2 400 000 000", change24h: "-1.55%", changeColor: "text-red-600", bgColor: "bg-violet-700", icon: "D" }
   ];
+  const [rows, setRows] = useState(cryptoPrices);
+
+  const toggleFavorite = (symbol: string) => {
+    setFavorites(prev => {
+      const next = new Set(prev);
+      if (next.has(symbol)) next.delete(symbol); else next.add(symbol);
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('favoriteSymbols', JSON.stringify(Array.from(favorites)));
+    } catch {}
+  }, [favorites]);
+
+  useEffect(() => {
+    const fetchBitcoinToday = async () => {
+      try {
+        const baseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;
+        const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
+        if (!baseUrl || !anonKey) {
+          console.warn("Supabase env not set; skipping live BTC price fetch");
+          return;
+        }
+        const url = `${baseUrl}/functions/v1/historical-prices?id=bitcoin&vs_currency=nok&days=1&interval=hourly`;
+        const resp = await fetch(url, {
+          headers: { Authorization: `Bearer ${anonKey}` },
+        });
+        if (!resp.ok) {
+          console.warn("BTC price fetch failed:", resp.status, await resp.text());
+          return;
+        }
+        const data = await resp.json();
+        const points: Array<{ timestamp: number; price?: number }> = data?.points || [];
+        const last = [...points].reverse().find(p => typeof p.price === 'number');
+        if (!last || typeof last.price !== 'number') return;
+        const nok = last.price;
+        setRows(prev => prev.map(item => (
+          item.symbol === 'BTC'
+            ? { ...item, price: `NOK ${nok.toLocaleString('nb-NO', { maximumFractionDigits: 2 })}` }
+            : item
+        )));
+      } catch (err) {
+        console.warn("BTC price fetch exception:", err);
+      }
+    };
+    fetchBitcoinToday();
+  }, []);
+
+  const displayedRows = activeTab === 'watchlist' ? rows.filter(r => favorites.has(r.symbol)) : rows;
 
   return (
     <div className="space-y-6">
@@ -417,11 +475,22 @@ const Prices = () => {
               </tr>
             </thead>
             <tbody>
-              {cryptoPrices.map((crypto, index) => (
+              {displayedRows.map((crypto, index) => (
                 <tr key={index} className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
                   <td className="py-4 px-4">
                     <div className="flex items-center gap-3">
-                      <Star size={16} className="text-gray-400 dark:text-gray-500" />
+                      <button
+                        onClick={() => toggleFavorite(crypto.symbol)}
+                        className="cursor-pointer"
+                        title={favorites.has(crypto.symbol) ? 'Unfavorite' : 'Favorite'}
+                        aria-label={favorites.has(crypto.symbol) ? 'Unfavorite' : 'Favorite'}
+                      >
+                        <Star
+                          size={16}
+                          className={favorites.has(crypto.symbol) ? 'text-yellow-400' : 'text-gray-400 dark:text-gray-500'}
+                          fill={favorites.has(crypto.symbol) ? 'currentColor' : 'none'}
+                        />
+                      </button>
                       <div className={`w-8 h-8 ${crypto.bgColor} rounded-full flex items-center justify-center text-white font-bold text-sm`}>
                         {crypto.icon}
                       </div>

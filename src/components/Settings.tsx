@@ -34,7 +34,7 @@ const Settings = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Email</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.account.email')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                   <span>matshatlem@gmail.com</span>
@@ -44,20 +44,20 @@ const Settings = () => {
 
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Password</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.account.password')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <span>Reset password</span>
+                  <span>{t('settings.account.resetPassword')}</span>
                   <ChevronRight size={16} />
                 </div>
               </div>
 
               <div className="flex items-center justify-between py-4">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">UI Theme</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.account.uiTheme')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <span>System</span>
+                  <span>{t('settings.account.uiTheme.system')}</span>
                   <ChevronRight size={16} />
                 </div>
               </div>
@@ -69,27 +69,27 @@ const Settings = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Home country</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.location.homeCountry')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <span>Norway</span>
+                  <span>{t('settings.location.homeCountryValue')}</span>
                   <ChevronRight size={16} />
                 </div>
               </div>
 
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Base currency</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.location.baseCurrency')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <span>Norwegian Krone</span>
+                  <span>{t('settings.location.baseCurrencyValue')}</span>
                   <ChevronRight size={16} />
                 </div>
               </div>
 
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Language</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.location.language')}</h3>
                 </div>
                 <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
                   <button
@@ -110,7 +110,7 @@ const Settings = () => {
 
               <div className="flex items-center justify-between py-4">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Custom currencies</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.location.customCurrencies')}</h3>
                 </div>
                 <ChevronRight size={16} className="text-gray-600 dark:text-gray-400" />
               </div>
@@ -120,11 +120,11 @@ const Settings = () => {
           {/* Security Settings */}
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
             <div className="mb-4">
-              <h3 className="font-medium text-gray-900 dark:text-white mb-2">Two factor authentication</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Secure your Kryptools account with an additional layer of security.</p>
+              <h3 className="font-medium text-gray-900 dark:text-white mb-2">{t('settings.security.tfa.title')}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{t('settings.security.tfa.desc')}</p>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600 dark:text-gray-400">Enable two factor authentication</span>
+              <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.security.tfa.enable')}</span>
               <button onClick={() => setTwoFactorEnabled(!twoFactorEnabled)} className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${twoFactorEnabled ? 'bg-blue-600 dark:bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'}`}>
                 <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${twoFactorEnabled ? 'translate-x-6' : 'translate-x-1'}`} />
               </button>
@@ -134,11 +134,11 @@ const Settings = () => {
           {/* Support Permission */}
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
             <div className="mb-4">
-              <h3 className="font-medium text-gray-900 dark:text-white mb-2">Permission for Kryptools Support to view my account</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">This enables Kryptools support to view your Kryptools account in order to troubleshoot issues. You can revoke access any time.</p>
+              <h3 className="font-medium text-gray-900 dark:text-white mb-2">{t('settings.support.title')}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{t('settings.support.desc')}</p>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600 dark:text-gray-400">Allow support access</span>
+              <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.support.enable')}</span>
               <button onClick={() => setSupportPermissionEnabled(!supportPermissionEnabled)} className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${supportPermissionEnabled ? 'bg-blue-600 dark:bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'}`}>
                 <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${supportPermissionEnabled ? 'translate-x-6' : 'translate-x-1'}`} />
               </button>
@@ -148,10 +148,10 @@ const Settings = () => {
           {/* Tax Professional */}
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
             <div className="mb-4">
-              <h3 className="font-medium text-gray-900 dark:text-white mb-2">I am a tax professional</h3>
+              <h3 className="font-medium text-gray-900 dark:text-white mb-2">{t('settings.taxPro.title')}</h3>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600 dark:text-gray-400">Tax professional status</span>
+              <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.taxPro.status')}</span>
               <button onClick={() => setTaxProfessionalEnabled(!taxProfessionalEnabled)} className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${taxProfessionalEnabled ? 'bg-blue-600 dark:bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'}`}>
                 <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${taxProfessionalEnabled ? 'translate-x-6' : 'translate-x-1'}`} />
               </button>
@@ -161,11 +161,11 @@ const Settings = () => {
           {/* Delete Account */}
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
             <div className="mb-4">
-              <h3 className="font-medium text-red-600 dark:text-red-400 mb-2">Delete account</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">This deletes all your Kryptools account data including exchanges, wallets, transactions and trade history. This action is irreversible.</p>
+              <h3 className="font-medium text-red-600 dark:text-red-400 mb-2">{t('settings.delete.title')}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{t('settings.delete.desc')}</p>
             </div>
             <Button variant="destructive">
-              Delete account
+              {t('settings.delete.cta')}
             </Button>
           </div>
         </div>}
@@ -177,21 +177,21 @@ const Settings = () => {
               {/* Cost basis method */}
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Cost basis method</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">This is the only cost basis method available for your country.</p>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.tax.costBasis.title')}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{t('settings.tax.costBasis.desc')}</p>
                 </div>
                 <div className="text-gray-600 dark:text-gray-400">
-                  <span>FIFO</span>
+                  <span>{t('settings.tax.costBasis.value')}</span>
                 </div>
               </div>
 
               {/* Cost basis tracking */}
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Cost basis tracking</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.tax.costTracking.title')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <span>Universal</span>
+                  <span>{t('settings.tax.costTracking.value')}</span>
                   <ChevronRight size={16} />
                 </div>
               </div>
@@ -199,10 +199,10 @@ const Settings = () => {
               {/* Tax year */}
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Tax year</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.tax.taxYear.title')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <span>January 1st to December 31st</span>
+                  <span>{t('settings.tax.taxYear.value')}</span>
                   <ChevronRight size={16} />
                 </div>
               </div>
@@ -210,10 +210,10 @@ const Settings = () => {
               {/* Treat liquid staking as non-taxable */}
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Treat liquid staking as non-taxable</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.tax.liquidStaking.title')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <span>Off</span>
+                  <span>{t('common.off')}</span>
                   <ChevronRight size={16} />
                 </div>
               </div>
@@ -221,10 +221,10 @@ const Settings = () => {
               {/* Treat wrapping as non-taxable */}
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Treat wrapping as non-taxable</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.tax.wrapping.title')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <span>Off</span>
+                  <span>{t('common.off')}</span>
                   <ChevronRight size={16} />
                 </div>
               </div>
@@ -232,10 +232,10 @@ const Settings = () => {
               {/* Treat liquid lending as non-taxable */}
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Treat liquid lending as non-taxable</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.tax.lending.title')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <span>Off</span>
+                  <span>{t('common.off')}</span>
                   <ChevronRight size={16} />
                 </div>
               </div>
@@ -243,10 +243,10 @@ const Settings = () => {
               {/* Treat liquidity pool transactions as non-taxable */}
               <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Treat liquidity pool transactions as non-taxable</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.tax.lp.title')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <span>Off</span>
+                  <span>{t('common.off')}</span>
                   <ChevronRight size={16} />
                 </div>
               </div>
@@ -254,10 +254,10 @@ const Settings = () => {
               {/* Treat staking rewards as non-taxable */}
               <div className="flex items-center justify-between py-4">
                 <div>
-                  <h3 className="font-medium text-gray-900 dark:text-white">Treat staking rewards as non-taxable</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white">{t('settings.tax.stakingRewards.title')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <span>Off</span>
+                  <span>{t('common.off')}</span>
                   <ChevronRight size={16} />
                 </div>
               </div>
@@ -268,17 +268,17 @@ const Settings = () => {
       {activeTab === "subscription" && <div className="space-y-8">
           {/* Subscription Plans */}
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Choose the plan that's right for you</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-2">We take care of your crypto taxes accurately, quickly, and securely</p>
-            <p className="text-gray-600 dark:text-gray-400">so you can file online or with your tax professional</p>
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{t('settings.sub.choosePlanTitle')}</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-2">{t('settings.sub.taglineLine1')}</p>
+            <p className="text-gray-600 dark:text-gray-400">{t('settings.sub.taglineLine2')}</p>
             
             {/* Integration badges */}
             <div className="flex items-center justify-center gap-8 mt-6">
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600 dark:text-gray-400">500+ crypto integrations</span>
+                <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.badge.integrations')}</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600 dark:text-gray-400">File directly with Tripletex and Fiken</span>
+                <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.badge.tripletex')}</span>
               </div>
             </div>
           </div>
@@ -288,174 +288,174 @@ const Settings = () => {
             {/* Base Plan */}
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
               <div className="mb-4">
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Simple</p>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Base</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t('settings.sub.plan.base.tier')}</p>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t('settings.sub.plan.base.name')}</h3>
                 <div className="mt-4">
-                  <span className="text-3xl font-bold text-gray-900 dark:text-white">$59</span>
+                  <span className="text-3xl font-bold text-gray-900 dark:text-white">{t('settings.sub.plan.base.price')}</span>
                   <span className="text-gray-600 dark:text-gray-400">/year</span>
                 </div>
               </div>
-              <Button className="w-full mb-6" variant="outline">Get Base →</Button>
+              <Button className="w-full mb-6" variant="outline">{t('settings.sub.plan.base.cta')}</Button>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Portfolio tracking</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.portfolioTracking')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Tripletex and Fiken integrations</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.tripletexFiken')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-red-500 dark:text-red-400">⚠</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Tax reports for 2024 and all past years</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.taxReports')}</span>
                 </div>
               </div>
               <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-sm text-gray-600 dark:text-gray-400">Up to 100 transactions per year</p>
-                <p className="text-xs text-gray-500 dark:text-gray-500">You're at 3%</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.limit.base')}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-500">{t('settings.sub.progress')}</p>
               </div>
             </div>
 
             {/* Prime Plan */}
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm relative">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <span className="bg-blue-600 dark:bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-medium">Best value</span>
+                <span className="bg-blue-600 dark:bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-medium">{t('settings.sub.plan.prime.badge')}</span>
               </div>
               <div className="mb-4">
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Optimized</p>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Prime</h3>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t('settings.sub.plan.prime.name')}</h3>
                 <div className="mt-4">
-                  <span className="text-3xl font-bold text-gray-900 dark:text-white">$199</span>
+                  <span className="text-3xl font-bold text-gray-900 dark:text-white">{t('settings.sub.plan.prime.price')}</span>
                   <span className="text-gray-600 dark:text-gray-400">/year</span>
                 </div>
               </div>
-              <Button className="w-full mb-6">Get Prime →</Button>
+              <Button className="w-full mb-6">{t('settings.sub.plan.prime.cta')}</Button>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Tax lots breakdown</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.taxLots')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Tax loss harvesting</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.tlh')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Performance tracking</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.performance')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Portfolio tracking</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.portfolioTracking')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Tripletex and Fiken integrations</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.tripletexFiken')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Tax reports for 2024 and all past years</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.taxReports')}</span>
                 </div>
               </div>
               <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-sm text-gray-600 dark:text-gray-400">Up to 1,000 transactions per year</p>
-                <p className="text-xs text-gray-500 dark:text-gray-500">You're at 3%</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.limit.prime')}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-500">{t('settings.sub.progress')}</p>
               </div>
             </div>
 
             {/* Ultra Plan */}
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
               <div className="mb-4">
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Advanced</p>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Ultra</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t('settings.sub.plan.ultra.tier')}</p>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t('settings.sub.plan.ultra.name')}</h3>
                 <div className="mt-4">
-                  <span className="text-3xl font-bold text-gray-900 dark:text-white">$599</span>
+                  <span className="text-3xl font-bold text-gray-900 dark:text-white">{t('settings.sub.plan.ultra.price')}</span>
                   <span className="text-gray-600 dark:text-gray-400">/year</span>
                 </div>
               </div>
-              <Button className="w-full mb-6" variant="outline">Get Ultra →</Button>
+              <Button className="w-full mb-6" variant="outline">{t('settings.sub.plan.ultra.cta')}</Button>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Priority support</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.prioritySupport')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Change cost basis method by year</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.changeCostBasis')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Tax lots breakdown</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.taxLots')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Tax loss harvesting</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.tlh')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Performance tracking</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.performance')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Portfolio tracking</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.portfolioTracking')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Tripletex and Fiken integrations</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.tripletexFiken')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Tax reports for 2024 and all past years</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.taxReports')}</span>
                 </div>
               </div>
               <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-sm text-gray-600 dark:text-gray-400">Up to 10,000 transactions per year</p>
-                <p className="text-xs text-gray-500 dark:text-gray-500">You're at 3%</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.limit.ultra')}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-500">{t('settings.sub.progress')}</p>
               </div>
             </div>
 
             {/* Full Service Plan */}
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
               <div className="mb-4">
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Bespoke</p>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Full Service</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{t('settings.sub.plan.full.tier')}</p>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{t('settings.sub.plan.full.name')}</h3>
                 <div className="mt-4">
-                  <span className="text-3xl font-bold text-gray-900 dark:text-white">$3499</span>
+                  <span className="text-3xl font-bold text-gray-900 dark:text-white">{t('settings.sub.plan.full.price')}</span>
                   <span className="text-gray-600 dark:text-gray-400">/year</span>
                 </div>
               </div>
               <div className="flex gap-2 mb-6">
-                <Button className="flex-1" variant="outline">Get Full Service →</Button>
-                <Button variant="outline">Contact us</Button>
+                <Button className="flex-1" variant="outline">{t('settings.sub.plan.full.cta')}</Button>
+                <Button variant="outline">{t('settings.sub.plan.full.contact')}</Button>
               </div>
               <div className="space-y-3 mb-6">
                 <p className="text-sm font-medium text-gray-900 dark:text-white">You have access beyond the Ultra+ plan with:</p>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">A dedicated account manager that works with you to manage your CoinTracker account.</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.full.accountManager')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Personal assistance in managing and importing CSV files.</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.full.csvHelp')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">A dedicated team of experts ready to work with you to review transactions, identify and fix errors, and reconcile your accounts.</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.full.expertTeam')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-600 dark:text-green-400">✓</span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Quarterly account health reviews so you're ready and confident well before tax deadlines.</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.feature.full.quarterlyHealth')}</span>
                 </div>
               </div>
               <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                <p className="text-sm text-gray-600 dark:text-gray-400">This plan allows up to 300k transactions. Contact us if you are looking for higher limits or more support.</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{t('settings.sub.limit.full')}</p>
               </div>
             </div>
           </div>
         </div>}
 
       {activeTab === "notifications" && <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8 shadow-sm">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Notifications</h2>  
-          <p className="text-gray-600 dark:text-gray-400">Notification preferences will be displayed here.</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">{t('settings.notifications.title')}</h2>  
+          <p className="text-gray-600 dark:text-gray-400">{t('settings.notifications.desc')}</p>
         </div>}
     </div>;
 };

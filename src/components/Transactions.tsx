@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { AddTransactionModal } from "./AddTransactionModal";
+import { TransactionDetailsModal, type TransactionRow } from "./TransactionDetailsModal";
 
 const Transactions = () => {
   const { t } = useLanguage();
@@ -20,6 +21,8 @@ const Transactions = () => {
   const [selectedDateRange, setSelectedDateRange] = useState<string>("All time");
   const [selectedHide, setSelectedHide] = useState<string[]>([]);
   const [showAddTransaction, setShowAddTransaction] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const [selectedTx, setSelectedTx] = useState<TransactionRow | null>(null);
 
   const baseTransactions = [
     {
@@ -114,7 +117,10 @@ const Transactions = () => {
     };
   });
 
-  const transactions = [...baseTransactions, ...moreTransactions];
+  const transactions = [...baseTransactions, ...moreTransactions].map((t, i) => ({
+    id: `tx_${i + 1}`,
+    ...t,
+  }));
 
   // Filter option lists
   const walletFilterOptions = ["Select all", ...walletsList];
@@ -436,7 +442,7 @@ const Transactions = () => {
             </thead>
             <tbody>
               {transactions.map((transaction, index) => (
-                <tr key={index} className="border-b border-gray-100 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
+                <tr key={transaction.id} className="border-b border-gray-100 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
                   <td className="py-4 px-4">
                     <input type="checkbox" className="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800" />
                   </td>
@@ -465,7 +471,15 @@ const Transactions = () => {
                     </div>
                   </td>
                   <td className="py-4 px-4">
-                    <Button variant="ghost" size="sm" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                      onClick={() => {
+                        setSelectedTx(transaction as TransactionRow);
+                        setShowDetails(true);
+                      }}
+                    >
                       <MoreHorizontal size={16} />
                     </Button>
                   </td>
@@ -480,6 +494,23 @@ const Transactions = () => {
       <AddTransactionModal 
         isOpen={showAddTransaction}
         onClose={() => setShowAddTransaction(false)}
+      />
+
+      {/* Transaction Details Modal */}
+      <TransactionDetailsModal
+        isOpen={showDetails}
+        transaction={selectedTx}
+        onClose={() => setShowDetails(false)}
+        onSave={(id, updates) => {
+          // For now, update in-place in this mock table
+          if (selectedTx && selectedTx.id === id) {
+            setSelectedTx({ ...selectedTx, ...updates });
+          }
+        }}
+        onDelete={(id) => {
+          // In a real app, call API to delete and refresh list
+          console.log('Delete tx', id);
+        }}
       />
     </div>
   );

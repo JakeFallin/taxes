@@ -330,7 +330,7 @@ const Dashboard = () => {
                         {t('dashboard.swapView')}
                       </Button>
                     </div>
-                    <div className="flex-1 p-4 pt-2 min-h-[360px]">
+                    <div className="flex-1 p-4 pt-2 min-h-[360px] bg-gray-50 dark:bg-gray-800 rounded-lg">
                       <PerformanceChart />
                     </div>
                   </div>
@@ -514,7 +514,7 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="p-4 pt-2 flex-1 relative h-[360px]">
+                      <div className="p-4 pt-2 flex-1 relative h-[360px] bg-gray-50 dark:bg-gray-800 rounded-lg">
                         <CompactPerformanceChart selectedPeriod={selectedPeriod} />
                       </div>
                       </div>

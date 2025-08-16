@@ -90,6 +90,8 @@ const CompactPerformanceChart = ({ selectedPeriod }: { selectedPeriod?: string }
               className="dark:[&>text]:fill-gray-300" 
               fontSize={10}
               tick={{ fontSize: 10 }}
+              tickLine={false}
+              axisLine={false}
             />
             <YAxis 
               stroke="#6b7280" 
@@ -99,10 +101,12 @@ const CompactPerformanceChart = ({ selectedPeriod }: { selectedPeriod?: string }
               domain={yDomain}
               allowDataOverflow
               tick={{ fontSize: 10 }}
+              tickLine={false}
+              axisLine={false}
             />
-            <Tooltip content={<CustomTooltip />} />
-            <Area type="monotone" dataKey="portfolio" stroke="#f97316" strokeWidth={2} fillOpacity={1} fill="url(#portfolioFillCompact)" dot={false} />
-            <Line type="monotone" dataKey="portfolio" stroke="#f97316" strokeWidth={2} dot={false} />
+            <Tooltip cursor={{ stroke: "#9ca3af", strokeDasharray: "3 3" }} content={<CustomTooltip />} />
+            <Area type="linear" dataKey="portfolio" stroke="#f97316" strokeWidth={2} fillOpacity={1} fill="url(#portfolioFillCompact)" dot={false} />
+            <Line type="linear" dataKey="portfolio" stroke="#f97316" strokeWidth={2} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>

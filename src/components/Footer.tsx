@@ -45,7 +45,7 @@ const footerNavigation = {
 export default function Footer() {
   const { t } = useLanguage();
   return (
-     <footer className="bg-white border-t border-gray-200 mt-auto" aria-labelledby="footer-heading">
+     <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 mt-auto" aria-labelledby="footer-heading">
         <h2 id="footer-heading" className="sr-only">Footer</h2>
         <div className="mx-auto max-w-7xl px-6 pb-6 pt-6 sm:pt-8 lg:px-8 lg:pt-10">
           <div className="xl:grid xl:grid-cols-3 xl:gap-8">
@@ -56,26 +56,26 @@ export default function Footer() {
                  <span className="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-600 text-2xl font-bold text-white">
                    K
                  </span>
-                 <span className="text-2xl font-bold text-gray-900">Kryptools</span> {/* Use Kryptools name */}
+                 <span className="text-2xl font-bold text-gray-900 dark:text-white">Kryptools</span> {/* Use Kryptools name */}
               </div>
-              <p className="text-sm leading-6 text-gray-600">
+              <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
                 {t('footer.tagline')}
               </p>
               <div className="flex space-x-6">
                 {/* Placeholder Social Links - Replace href and icons */}
-                <a href="#" className="text-gray-500 hover:text-gray-700">
+                <a href="#" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
                   <span className="sr-only">Twitter</span>
                   <Globe className="h-6 w-6" aria-hidden="true" /> 
                 </a>
-                <a href="#" className="text-gray-500 hover:text-gray-700">
+                <a href="#" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
                   <span className="sr-only">Facebook</span>
                   <Globe className="h-6 w-6" aria-hidden="true" /> 
                 </a>
-                <a href="#" className="text-gray-500 hover:text-gray-700">
+                <a href="#" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
                   <span className="sr-only">GitHub</span>
                   <Globe className="h-6 w-6" aria-hidden="true" /> 
                 </a>
-                <a href="#" className="text-gray-500 hover:text-gray-700">
+                <a href="#" className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
                   <span className="sr-only">LinkedIn</span>
                   <Globe className="h-6 w-6" aria-hidden="true" /> 
                 </a>
@@ -87,11 +87,11 @@ export default function Footer() {
               <div className="md:grid md:grid-cols-2 md:gap-8">
                 {/* Product Column */}
                 <div>
-                  <h3 className="text-sm font-semibold leading-6 text-gray-900">{t('footer.product')}</h3>
+                  <h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{t('footer.product')}</h3>
                   <ul role="list" className="mt-4 space-y-3">
                     {footerNavigation.product.map((item) => (
                       <li key={item.name}>
-                        <Link to={item.href} className="text-sm leading-6 text-gray-600 hover:text-gray-900">
+                        <Link to={item.href} className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
                           {item.name}
                         </Link>
                       </li>
@@ -100,11 +100,11 @@ export default function Footer() {
                 </div>
                 {/* Resources Column */}
                 <div className="mt-8 md:mt-0">
-                  <h3 className="text-sm font-semibold leading-6 text-gray-900">{t('footer.resources')}</h3>
+                  <h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{t('footer.resources')}</h3>
                   <ul role="list" className="mt-4 space-y-3">
                     {footerNavigation.resources.map((item) => (
                       <li key={item.name}>
-                        <Link to={item.href} className="text-sm leading-6 text-gray-600 hover:text-gray-900">
+                        <Link to={item.href} className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
                           {item.name}
                         </Link>
                       </li>
@@ -115,11 +115,11 @@ export default function Footer() {
               <div className="md:grid md:grid-cols-2 md:gap-8">
                 {/* Company Column */}
                 <div>
-                  <h3 className="text-sm font-semibold leading-6 text-gray-900">{t('footer.company')}</h3>
+                  <h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{t('footer.company')}</h3>
                   <ul role="list" className="mt-4 space-y-3">
                     {footerNavigation.company.map((item) => (
                       <li key={item.name}>
-                        <Link to={item.href} className="text-sm leading-6 text-gray-600 hover:text-gray-900">
+                        <Link to={item.href} className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
                           {item.name}
                         </Link>
                       </li>
@@ -128,11 +128,11 @@ export default function Footer() {
                 </div>
                 {/* Legal Column */}
                 <div className="mt-8 md:mt-0">
-                  <h3 className="text-sm font-semibold leading-6 text-gray-900">{t('footer.legal')}</h3>
+                  <h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{t('footer.legal')}</h3>
                   <ul role="list" className="mt-4 space-y-3">
                     {footerNavigation.legal.map((item) => (
                       <li key={item.name}>
-                        <Link to={item.href} className="text-sm leading-6 text-gray-600 hover:text-gray-900">
+                        <Link to={item.href} className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
                           {item.name}
                         </Link>
                       </li>
@@ -143,8 +143,8 @@ export default function Footer() {
             </div>
           </div>
           {/* Copyright */}
-          <div className="mt-10 border-t border-gray-200 pt-6 sm:mt-12 lg:mt-14">
-            <p className="text-xs leading-5 text-gray-500">&copy; {new Date().getFullYear()} Kryptools. {t('footer.rights')}</p>
+          <div className="mt-10 border-t border-gray-200 dark:border-gray-700 pt-6 sm:mt-12 lg:mt-14">
+            <p className="text-xs leading-5 text-gray-500 dark:text-gray-400">&copy; {new Date().getFullYear()} Kryptools. {t('footer.rights')}</p>
           </div>
         </div>
       </footer>

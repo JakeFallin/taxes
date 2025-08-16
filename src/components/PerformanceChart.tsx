@@ -122,11 +122,11 @@ const PerformanceChart = () => {
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" className="dark:[&>*]:stroke-gray-700" />
-            <XAxis dataKey="name" stroke="#6b7280" className="dark:[&>text]:fill-gray-300" fontSize={12} />
-            <YAxis stroke="#6b7280" className="dark:[&>text]:fill-gray-300" fontSize={12} tickFormatter={currencyTick} domain={yDomain} allowDataOverflow />
-            <Tooltip content={<CustomTooltip />} />
-            <Area type="monotone" dataKey="portfolio" stroke="#f97316" strokeWidth={2.5} fillOpacity={1} fill="url(#portfolioFill)" dot={false} />
-            <Line type="monotone" dataKey="portfolio" stroke="#f97316" strokeWidth={2.5} dot={false} />
+            <XAxis dataKey="name" stroke="#6b7280" className="dark:[&>text]:fill-gray-300" fontSize={12} tickLine={false} axisLine={false} />
+            <YAxis stroke="#6b7280" className="dark:[&>text]:fill-gray-300" fontSize={12} tickFormatter={currencyTick} domain={yDomain} allowDataOverflow tickLine={false} axisLine={false} />
+            <Tooltip cursor={{ stroke: "#9ca3af", strokeDasharray: "3 3" }} content={<CustomTooltip />} />
+            <Area type="linear" dataKey="portfolio" stroke="#f97316" strokeWidth={2.5} fillOpacity={1} fill="url(#portfolioFill)" dot={false} />
+            <Line type="linear" dataKey="portfolio" stroke="#f97316" strokeWidth={2.5} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>

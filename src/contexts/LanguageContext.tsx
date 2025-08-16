@@ -67,6 +67,8 @@ const DICT: Dictionary = {
   'wallets.syncAll': { en: 'Sync All', no: 'Synk alle' },
   'wallets.addWallet': { en: 'Add wallet', no: 'Legg til lommebok' },
   'wallets.importCsv': { en: 'Import CSV', no: 'Importer CSV' },
+  'wallets.tab.wallets': { en: 'Wallets', no: 'Lommebøker' },
+  'wallets.tab.assets': { en: 'Assets', no: 'Eiendeler' },
   'wallets.searchPlaceholder': { en: 'Type to find a wallet or chain...', no: 'Skriv for å finne lommebok eller kjede...' },
   'wallets.sortBy': { en: 'Sort by', no: 'Sorter etter' },
   'wallets.sortByHighest': { en: 'Sort by Highest market value', no: 'Høyeste markedsverdi' },
@@ -88,6 +90,27 @@ const DICT: Dictionary = {
   'wallets.added': { en: 'Added', no: 'Lagt til' },
   'wallets.lastSynced': { en: 'Last Synced', no: 'Sist synkronisert' },
   'wallets.description': { en: 'Description', no: 'Beskrivelse' },
+
+  // Assets (within Wallets page)
+  'assets.addAsset': { en: 'Add Asset', no: 'Legg til eiendel' },
+  'assets.search': { en: 'Search assets...', no: 'Søk i eiendeler...' },
+  'assets.type': { en: 'Type', no: 'Type' },
+  'assets.network': { en: 'Network', no: 'Nettverk' },
+  'assets.quantity': { en: 'Quantity', no: 'Antall' },
+  'assets.value': { en: 'Value', no: 'Verdi' },
+  'assets.nft': { en: 'NFT', no: 'NFT' },
+  'assets.token': { en: 'Token', no: 'Token' },
+  'assets.custom': { en: 'Custom', no: 'Egendefinert' },
+  'assets.none': { en: 'No assets found', no: 'Ingen eiendeler funnet' },
+  'assets.edit': { en: 'Edit', no: 'Rediger' },
+  'assets.delete': { en: 'Delete', no: 'Slett' },
+  'assets.moreInfo': { en: 'More info', no: 'Mer info' },
+  'assets.add.title': { en: 'Add Asset', no: 'Legg til eiendel' },
+  'assets.name': { en: 'Name', no: 'Navn' },
+  'assets.imageUrl': { en: 'Image URL (optional)', no: 'Bilde-URL (valgfritt)' },
+  'assets.save': { en: 'Save', no: 'Lagre' },
+  'assets.deleting': { en: 'Deleting...', no: 'Sletter...' },
+  'assets.deleteConfirm': { en: 'Are you sure you want to delete this asset?', no: 'Er du sikker på at du vil slette denne eiendelen?' },
 
   // Transactions
   'transactions.addNew': { en: 'Add New', no: 'Legg til ny' },
@@ -165,6 +188,10 @@ const DICT: Dictionary = {
   'performance.previewImpact': { en: 'Preview impact', no: 'Forhåndsvis effekt' },
   'performance.fundsOnExchanges': { en: 'Funds on exchanges', no: 'Midler på børser' },
   'performance.learnMore': { en: 'Learn more', no: 'Les mer' },
+  'performance.income': { en: 'Income', no: 'Inntekter' },
+  'performance.expenses': { en: 'Expenses', no: 'Utgifter' },
+  'performance.in': { en: 'In', no: 'Inn' },
+  'performance.out': { en: 'Out', no: 'Ut' },
 
   // Prices
   'prices.search': { en: 'Search', no: 'Søk' },
@@ -252,6 +279,106 @@ const DICT: Dictionary = {
   'settings.tabs.tax': { en: 'Tax', no: 'Skatt' },
   'settings.tabs.subscription': { en: 'Subscription', no: 'Abonnement' },
   'settings.tabs.notifications': { en: 'Notifications', no: 'Varsler' },
+
+  // Settings: Account
+  'settings.account.email': { en: 'Email', no: 'E-post' },
+  'settings.account.password': { en: 'Password', no: 'Passord' },
+  'settings.account.resetPassword': { en: 'Reset password', no: 'Tilbakestill passord' },
+  'settings.account.uiTheme': { en: 'UI Theme', no: 'UI-tema' },
+  'settings.account.uiTheme.system': { en: 'System', no: 'System' },
+
+  // Settings: Location & Language
+  'settings.location.homeCountry': { en: 'Home country', no: 'Hjemland' },
+  'settings.location.homeCountryValue': { en: 'Norway', no: 'Norge' },
+  'settings.location.baseCurrency': { en: 'Base currency', no: 'Grunnvaluta' },
+  'settings.location.baseCurrencyValue': { en: 'Norwegian Krone', no: 'Norske kroner' },
+  'settings.location.language': { en: 'Language', no: 'Språk' },
+  'settings.location.customCurrencies': { en: 'Custom currencies', no: 'Egendefinerte valutaer' },
+
+  // Settings: Security
+  'settings.security.tfa.title': { en: 'Two factor authentication', no: 'Tofaktorautentisering' },
+  'settings.security.tfa.desc': { en: 'Secure your Kryptools account with an additional layer of security.', no: 'Sikre Kryptools-kontoen din med et ekstra sikkerhetslag.' },
+  'settings.security.tfa.enable': { en: 'Enable two factor authentication', no: 'Aktiver tofaktorautentisering' },
+
+  // Settings: Support permission
+  'settings.support.title': { en: 'Permission for Kryptools Support to view my account', no: 'Tillatelse for Kryptools Support til å se kontoen min' },
+  'settings.support.desc': { en: 'This enables Kryptools support to view your Kryptools account in order to troubleshoot issues. You can revoke access any time.', no: 'Dette gjør at Kryptools support kan se kontoen din for å feilsøke problemer. Du kan når som helst oppheve tilgangen.' },
+  'settings.support.enable': { en: 'Allow support access', no: 'Tillat supporttilgang' },
+
+  // Settings: Tax professional
+  'settings.taxPro.title': { en: 'I am a tax professional', no: 'Jeg er en skatterådgiver' },
+  'settings.taxPro.status': { en: 'Tax professional status', no: 'Skatterådgiverstatus' },
+
+  // Settings: Delete account
+  'settings.delete.title': { en: 'Delete account', no: 'Slett konto' },
+  'settings.delete.desc': { en: 'This deletes all your Kryptools account data including exchanges, wallets, transactions and trade history. This action is irreversible.', no: 'Dette sletter all kontodata i Kryptools, inkludert børser, lommebøker, transaksjoner og handelshistorikk. Denne handlingen kan ikke angres.' },
+  'settings.delete.cta': { en: 'Delete account', no: 'Slett konto' },
+
+  // Settings: Tax tab
+  'settings.tax.costBasis.title': { en: 'Cost basis method', no: 'Kostpris-metode' },
+  'settings.tax.costBasis.desc': { en: 'This is the only cost basis method available for your country.', no: 'Dette er den eneste kostpris-metoden tilgjengelig for ditt land.' },
+  'settings.tax.costBasis.value': { en: 'FIFO', no: 'FIFO' },
+  'settings.tax.costTracking.title': { en: 'Cost basis tracking', no: 'Sporing av kostpris' },
+  'settings.tax.costTracking.value': { en: 'Universal', no: 'Universell' },
+  'settings.tax.taxYear.title': { en: 'Tax year', no: 'Skatteår' },
+  'settings.tax.taxYear.value': { en: 'January 1st to December 31st', no: '1. januar til 31. desember' },
+  'settings.tax.liquidStaking.title': { en: 'Treat liquid staking as non-taxable', no: 'Behandle «liquid staking» som ikke skattepliktig' },
+  'settings.tax.wrapping.title': { en: 'Treat wrapping as non-taxable', no: 'Behandle wrapping som ikke skattepliktig' },
+  'settings.tax.lending.title': { en: 'Treat liquid lending as non-taxable', no: 'Behandle «liquid lending» som ikke skattepliktig' },
+  'settings.tax.lp.title': { en: 'Treat liquidity pool transactions as non-taxable', no: 'Behandle likviditetspool-transaksjoner som ikke skattepliktige' },
+  'settings.tax.stakingRewards.title': { en: 'Treat staking rewards as non-taxable', no: 'Behandle staking-belønninger som ikke skattepliktige' },
+
+  // Settings: common values
+  'common.off': { en: 'Off', no: 'Av' },
+  'common.on': { en: 'On', no: 'På' },
+
+  // Settings: Subscription tab
+  'settings.sub.choosePlanTitle': { en: "Choose the plan that's right for you", no: 'Velg planen som passer for deg' },
+  'settings.sub.taglineLine1': { en: 'We take care of your crypto taxes accurately, quickly, and securely', no: 'Vi tar hånd om krypto-skattene dine nøyaktig, raskt og sikkert' },
+  'settings.sub.taglineLine2': { en: 'so you can file online or with your tax professional', no: 'slik at du kan levere online eller med din skatterådgiver' },
+  'settings.sub.badge.integrations': { en: '500+ crypto integrations', no: '500+ krypto-integrasjoner' },
+  'settings.sub.badge.tripletex': { en: 'File directly with Tripletex and Fiken', no: 'Lever direkte med Tripletex og Fiken' },
+
+  'settings.sub.plan.base.tier': { en: 'Simple', no: 'Enkel' },
+  'settings.sub.plan.base.name': { en: 'Base', no: 'Base' },
+  'settings.sub.plan.base.price': { en: '$59', no: '$59' },
+  'settings.sub.plan.base.cta': { en: 'Get Base →', no: 'Velg Base →' },
+  'settings.sub.plan.prime.badge': { en: 'Best value', no: 'Beste verdi' },
+  'settings.sub.plan.prime.name': { en: 'Prime', no: 'Prime' },
+  'settings.sub.plan.prime.price': { en: '$199', no: '$199' },
+  'settings.sub.plan.prime.cta': { en: 'Get Prime →', no: 'Velg Prime →' },
+  'settings.sub.plan.ultra.tier': { en: 'Advanced', no: 'Avansert' },
+  'settings.sub.plan.ultra.name': { en: 'Ultra', no: 'Ultra' },
+  'settings.sub.plan.ultra.price': { en: '$599', no: '$599' },
+  'settings.sub.plan.ultra.cta': { en: 'Get Ultra →', no: 'Velg Ultra →' },
+  'settings.sub.plan.full.tier': { en: 'Bespoke', no: 'Skreddersydd' },
+  'settings.sub.plan.full.name': { en: 'Full Service', no: 'Full service' },
+  'settings.sub.plan.full.price': { en: '$3499', no: '$3499' },
+  'settings.sub.plan.full.cta': { en: 'Get Full Service →', no: 'Velg Full service →' },
+  'settings.sub.plan.full.contact': { en: 'Contact us', no: 'Kontakt oss' },
+
+  // Settings: features and limits
+  'settings.sub.feature.portfolioTracking': { en: 'Portfolio tracking', no: 'Porteføljesporing' },
+  'settings.sub.feature.tripletexFiken': { en: 'Tripletex and Fiken integrations', no: 'Tripletex- og Fiken-integrasjoner' },
+  'settings.sub.feature.taxReports': { en: 'Tax reports for 2024 and all past years', no: 'Skatterapporter for 2024 og alle tidligere år' },
+  'settings.sub.feature.taxLots': { en: 'Tax lots breakdown', no: 'Detaljert skattegrunnlag' },
+  'settings.sub.feature.tlh': { en: 'Tax loss harvesting', no: 'Skattetapsrealisering' },
+  'settings.sub.feature.performance': { en: 'Performance tracking', no: 'Ytelsessporing' },
+  'settings.sub.feature.prioritySupport': { en: 'Priority support', no: 'Prioritert support' },
+  'settings.sub.feature.changeCostBasis': { en: 'Change cost basis method by year', no: 'Endre kostpris-metode per år' },
+  'settings.sub.feature.full.accountManager': { en: 'A dedicated account manager that works with you to manage your CoinTracker account.', no: 'En dedikert kundekontakt som hjelper deg å administrere CoinTracker-kontoen din.' },
+  'settings.sub.feature.full.csvHelp': { en: 'Personal assistance in managing and importing CSV files.', no: 'Personlig hjelp med håndtering og import av CSV-filer.' },
+  'settings.sub.feature.full.expertTeam': { en: 'A dedicated team of experts ready to work with you to review transactions, identify and fix errors, and reconcile your accounts.', no: 'Et dedikert ekspertteam som hjelper deg å gjennomgå transaksjoner, identifisere og rette feil og avstemme kontoer.' },
+  'settings.sub.feature.full.quarterlyHealth': { en: "Quarterly account health reviews so you're ready and confident well before tax deadlines.", no: 'Kvartalsvise helsesjekker av konto, slik at du er klar og trygg i god tid før skattemyfristene.' },
+  'settings.sub.limit.base': { en: 'Up to 100 transactions per year', no: 'Opptil 100 transaksjoner per år' },
+  'settings.sub.limit.prime': { en: 'Up to 1,000 transactions per year', no: 'Opptil 1 000 transaksjoner per år' },
+  'settings.sub.limit.ultra': { en: 'Up to 10,000 transactions per year', no: 'Opptil 10 000 transaksjoner per år' },
+  'settings.sub.limit.full': { en: 'This plan allows up to 300k transactions. Contact us if you are looking for higher limits or more support.', no: 'Denne planen tillater opptil 300 000 transaksjoner. Kontakt oss hvis du trenger høyere grenser eller mer støtte.' },
+  'settings.sub.progress': { en: "You're at 3%", no: 'Du er på 3 %' },
+
+  // Settings: Notifications
+  'settings.notifications.title': { en: 'Notifications', no: 'Varsler' },
+  'settings.notifications.desc': { en: 'Notification preferences will be displayed here.', no: 'Varslingsinnstillinger vises her.' },
 
   // Landing
   'landing.hero.line1': { en: 'Track Your Crypto', no: 'Spor din krypto' },
