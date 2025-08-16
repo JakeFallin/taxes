@@ -5,9 +5,11 @@ import FAQ from "@/components/FAQ";
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   
   return (
     <div className="min-h-screen bg-gray-50">
@@ -17,15 +19,15 @@ const LandingPage = () => {
       <section className="container mx-auto px-4 py-20 text-center">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight">
-            Track Your Crypto
+            {t('landing.hero.line1')}
             <br />
-            Calculate Your Taxes
+            {t('landing.hero.line2')}
             <br />
-            <span className="text-orange-500">Automatically</span>
+            <span className="text-orange-500">{t('landing.hero.auto')}</span>
           </h1>
           
           <p className="text-2xl md:text-3xl text-gray-700 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-            Connect your wallets and exchanges, track your assets automatically, and generate accurate tax reports with ease. Take control of your crypto finances.
+            {t('landing.hero.desc')}
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-6 sm:space-y-0 sm:space-x-6">
@@ -34,15 +36,15 @@ const LandingPage = () => {
               className="bg-blue-500 hover:bg-blue-600 text-white px-12 py-4 text-xl font-semibold"
               onClick={() => navigate('/auth')}
             >
-              Get started
+              {t('landing.hero.cta')}
             </Button>
             <Button variant="ghost" size="lg" className="text-gray-700 hover:text-gray-900 px-8 py-4 text-xl underline">
-              See How It Works →
+              {t('landing.hero.how')}
             </Button>
           </div>
           
           <p className="text-lg text-gray-500 mt-6">
-            No credit card required • Set up in 2 minutes
+            {t('landing.hero.badge')}
           </p>
         </div>
       </section>
@@ -51,42 +53,41 @@ const LandingPage = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <p className="text-orange-500 font-semibold mb-4 text-xl">What You Get</p>
+            <p className="text-orange-500 font-semibold mb-4 text-xl">{t('landing.whatYouGet')}</p>
             <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Everything You Need in One Place
+              {t('landing.everythingTitle')}
             </h2>
             <p className="text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Stop using spreadsheets and multiple apps. We bring all your crypto 
-              information together so you can focus on making smart investment decisions.
+              {t('landing.everythingDesc')}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             <FeatureCard
               icon="📋"
-              title="Simplified Tax Reporting"
-              description="Generate comprehensive tax reports compatible with tax software. Calculate capital gains and losses effortlessly."
+              title={t('landing.feature.tax.title')}
+              description={t('landing.feature.tax.desc')}
               iconBg="bg-orange-500"
             />
             
             <FeatureCard
               icon="📊"
-              title="Automatic Portfolio Tracking"
-              description="Connect your wallets and exchanges to automatically sync transactions and track your crypto portfolio value in real time."
+              title={t('landing.feature.tracking.title')}
+              description={t('landing.feature.tracking.desc')}
               iconBg="bg-orange-500"
             />
             
             <FeatureCard
               icon="📈"
-              title="Comprehensive Asset Overview"
-              description="View all your crypto assets across different wallets and blockchains in one unified dashboard."
+              title={t('landing.feature.overview.title')}
+              description={t('landing.feature.overview.desc')}
               iconBg="bg-orange-500"
             />
             
             <FeatureCard
               icon="🔒"
-              title="Secure & Private"
-              description="Your financial data matters. We prioritize security and privacy in handling your information."
+              title={t('landing.feature.secure.title')}
+              description={t('landing.feature.secure.desc')}
               iconBg="bg-orange-500"
             />
           </div>
@@ -100,12 +101,12 @@ const LandingPage = () => {
       <section className="py-20">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-6xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-6 leading-tight">
-            Save time.
+            {t('landing.slogan.line1')}
             <br />
-            Save money.
+            {t('landing.slogan.line2')}
           </h2>
           <p className="text-2xl text-gray-600 max-w-2xl mx-auto">
-            Join thousands of crypto investors who trust us with their portfolio tracking and tax reporting.
+            {t('landing.slogan.desc')}
           </p>
         </div>
       </section>

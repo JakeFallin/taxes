@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface SignupFormProps {
   onSwitchToLogin: () => void
@@ -13,6 +14,7 @@ interface SignupFormProps {
 }
 
 export function SignupForm({ onSwitchToLogin, onSuccess }: SignupFormProps) {
+  const { t } = useLanguage()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -66,9 +68,9 @@ export function SignupForm({ onSwitchToLogin, onSuccess }: SignupFormProps) {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold text-center">Create account</CardTitle>
+        <CardTitle className="text-2xl font-bold text-center">{t('auth.signup.title')}</CardTitle>
         <CardDescription className="text-center">
-          Sign up to start tracking your crypto portfolio
+          {t('auth.signup.desc')}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -80,11 +82,11 @@ export function SignupForm({ onSwitchToLogin, onSuccess }: SignupFormProps) {
           )}
           
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('auth.email')}</Label>
             <Input
               id="email"
               type="email"
-              placeholder="Enter your email"
+              placeholder={t('auth.email.placeholder')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -93,12 +95,12 @@ export function SignupForm({ onSwitchToLogin, onSuccess }: SignupFormProps) {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t('auth.password')}</Label>
             <div className="relative">
               <Input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
-                placeholder="Create a password (min 6 characters)"
+                placeholder={t('auth.password.placeholderCreate')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -122,12 +124,12 @@ export function SignupForm({ onSwitchToLogin, onSuccess }: SignupFormProps) {
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Confirm Password</Label>
+            <Label htmlFor="confirmPassword">{t('auth.password.confirm')}</Label>
             <div className="relative">
               <Input
                 id="confirmPassword"
                 type={showConfirmPassword ? 'text' : 'password'}
-                placeholder="Confirm your password"
+                placeholder={t('auth.password.confirmPlaceholder')}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -158,23 +160,23 @@ export function SignupForm({ onSwitchToLogin, onSuccess }: SignupFormProps) {
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating account...
+                {t('auth.creating')}
               </>
             ) : (
-              'Create account'
+              t('auth.create')
             )}
           </Button>
         </form>
         
         <div className="mt-4 text-center text-sm">
-          <span className="text-gray-600">Already have an account? </span>
+          <span className="text-gray-600">{t('auth.haveAccount')}</span>
           <button
             type="button"
             onClick={onSwitchToLogin}
             className="text-blue-600 hover:text-blue-800 font-medium"
             disabled={loading}
           >
-            Sign in
+            {t('auth.signinShort')}
           </button>
         </div>
       </CardContent>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAuthContext } from '@/contexts/AuthContext'
-import { walletService } from '@/lib/database'
+import { walletService, userService } from '@/lib/database'
 
 export interface Wallet {
   id: string
@@ -47,6 +47,10 @@ export function useWallets() {
     try {
       setLoading(true)
       setError('')
+      
+      // Ensure user profile exists first
+      await userService.ensureUserProfile(user.id, user.email || '')
+      
       const userWallets = await walletService.getUserWallets(user.id)
       setWallets(userWallets)
     } catch (err) {
@@ -93,12 +97,55 @@ export function useWallets() {
     }
   }
 
+  const updateWallet = async (walletId: string, updates: {
+    nickname?: string | null
+    description?: string | null
+    auto_sync_enabled?: boolean
+    included_in_tax?: boolean
+  }) => {
+    try {
+      const updatedWallet = await walletService.updateWallet(walletId, updates)
+      setWallets(prev => prev.map(wallet => 
+        wallet.id === walletId ? { ...wallet, ...updatedWallet } : wallet
+      ))
+      return updatedWallet
+    } catch (err) {
+      console.error('Error updating wallet:', err)
+      throw err
+    }
+  }
+
+  const syncWallet = async (walletId: string) => {
+    try {
+      console.log('🔄 Starting wallet sync for:', walletId)
+      const updatedWallet = await walletService.syncWallet(walletId)
+      console.log('✅ Wallet sync completed:', updatedWallet)
+      
+      // Update the local state with the new wallet data
+      setWallets(prev => {
+        console.log('🔄 Previous wallets state:', prev)
+        const newWallets = prev.map(wallet => 
+          wallet.id === walletId ? { ...wallet, ...updatedWallet } : wallet
+        )
+        console.log('🔄 New wallets state:', newWallets)
+        return newWallets
+      })
+      
+      return updatedWallet
+    } catch (err) {
+      console.error('❌ Error syncing wallet:', err)
+      throw err
+    }
+  }
+
   return {
     wallets,
     loading,
     error,
     addWallet,
     deleteWallet,
+    updateWallet,
+    syncWallet,
     refreshWallets: loadWallets
   }
 }

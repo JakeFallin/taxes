@@ -1,5 +1,6 @@
 
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const assets = [
   {
@@ -53,18 +54,19 @@ const assets = [
 ];
 
 const YourAssetsTable = () => {
+  const { t } = useLanguage();
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
       <div className="p-6">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">Your Assets</h2>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">{t('assets.title')}</h2>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow className="border-gray-200 dark:border-gray-700">
-                <TableHead className="text-gray-500 dark:text-gray-400 font-medium">Name</TableHead>
-                <TableHead className="text-gray-500 dark:text-gray-400 font-medium">Price</TableHead>
-                <TableHead className="text-gray-500 dark:text-gray-400 font-medium">Holdings</TableHead>
-                <TableHead className="text-gray-500 dark:text-gray-400 font-medium text-right">All Time Unrealized Return</TableHead>
+                <TableHead className="text-gray-500 dark:text-gray-400 font-medium">{t('assets.th.name')}</TableHead>
+                <TableHead className="text-gray-500 dark:text-gray-400 font-medium">{t('assets.th.price')}</TableHead>
+                <TableHead className="text-gray-500 dark:text-gray-400 font-medium">{t('assets.th.holdings')}</TableHead>
+                <TableHead className="text-gray-500 dark:text-gray-400 font-medium text-right">{t('assets.th.unrealized')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

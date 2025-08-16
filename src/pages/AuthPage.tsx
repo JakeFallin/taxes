@@ -4,12 +4,14 @@ import { LoginForm } from '@/components/auth/LoginForm'
 import { SignupForm } from '@/components/auth/SignupForm'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 type AuthMode = 'login' | 'signup'
 
 export default function AuthPage() {
   const [mode, setMode] = useState<AuthMode>('login')
   const navigate = useNavigate()
+  const { t } = useLanguage()
 
   const handleSuccess = () => {
     if (mode === 'signup') {
@@ -36,7 +38,7 @@ export default function AuthPage() {
           className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Home
+          {t('auth.backHome')}
         </Button>
       </div>
 
@@ -59,7 +61,7 @@ export default function AuthPage() {
 
       {/* Footer */}
       <div className="bg-white border-t border-gray-200 px-6 py-4 text-center text-sm text-gray-500">
-        <p>© 2024 Kryptools. All rights reserved.</p>
+        <p>© 2024 Kryptools. {t('footer.rights')}</p>
       </div>
     </div>
   )

@@ -1,7 +1,9 @@
 
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const AccountHealth = () => {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState("todo");
 
   return (
@@ -17,7 +19,7 @@ const AccountHealth = () => {
                 : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600"
             }`}
           >
-            Pending Tasks
+            {t('health.pending')}
           </button>
           <button 
             onClick={() => setActiveTab("ignored")}
@@ -27,7 +29,7 @@ const AccountHealth = () => {
                 : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600"
             }`}
           >
-            Ignored
+            {t('health.ignored')}
           </button>
         </nav>
       </div>
@@ -51,7 +53,7 @@ const AccountHealth = () => {
                 {/* Status Content */}
                 <div className="flex-1">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                    All your wallets are syncing correctly
+                    {t('health.allSyncing')}
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                     We automatically review your account on a regular basis. 
@@ -67,7 +69,7 @@ const AccountHealth = () => {
           <div className="lg:col-span-1">
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Why is this important?
+                {t('health.whyImportant')}
               </h3>
               <div className="space-y-4 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                 <p>
@@ -104,7 +106,7 @@ const AccountHealth = () => {
                 {/* Status Content */}
                 <div className="flex-1">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                    Nothing to see here
+                    {t('health.nothing')}
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                     You haven't ignored any tasks, so you can ignore this tab for now.
@@ -118,7 +120,7 @@ const AccountHealth = () => {
           <div className="lg:col-span-1">
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Why is this important?
+                {t('health.whyImportant')}
               </h3>
               <div className="space-y-4 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                 <p>

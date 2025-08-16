@@ -1,26 +1,28 @@
 import { ChevronRight } from "lucide-react";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 const Settings = () => {
   const [activeTab, setActiveTab] = useState("account");
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
   const [supportPermissionEnabled, setSupportPermissionEnabled] = useState(false);
   const [taxProfessionalEnabled, setTaxProfessionalEnabled] = useState(true);
+  const { language, setLanguage, t } = useLanguage();
   return <div className="space-y-8">
       {/* Tab Navigation */}
       <div className="border-b border-gray-200 dark:border-gray-700">
         <nav className="-mb-px flex space-x-8">
           <button onClick={() => setActiveTab("account")} className={`border-b-2 py-2 px-1 text-sm font-medium ${activeTab === "account" ? "border-orange-500 text-orange-500 dark:border-orange-400 dark:text-orange-400" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-600"}`}>
-            Account
+            {t('settings.tabs.account')}
           </button>
           <button onClick={() => setActiveTab("tax")} className={`border-b-2 py-2 px-1 text-sm font-medium ${activeTab === "tax" ? "border-orange-500 text-orange-500 dark:border-orange-400 dark:text-orange-400" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-600"}`}>
-            Tax
+            {t('settings.tabs.tax')}
           </button>
           <button onClick={() => setActiveTab("subscription")} className={`border-b-2 py-2 px-1 text-sm font-medium ${activeTab === "subscription" ? "border-orange-500 text-orange-500 dark:border-orange-400 dark:text-orange-400" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-600"}`}>
-            Subscription
+            {t('settings.tabs.subscription')}
           </button>
           <button onClick={() => setActiveTab("notifications")} className={`border-b-2 py-2 px-1 text-sm font-medium ${activeTab === "notifications" ? "border-orange-500 text-orange-500 dark:border-orange-400 dark:text-orange-400" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-600"}`}>
-            Notifications
+            {t('settings.tabs.notifications')}
           </button>
         </nav>
       </div>
@@ -84,6 +86,27 @@ const Settings = () => {
                   <ChevronRight size={16} />
                 </div>
               </div>
+
+              <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
+                <div>
+                  <h3 className="font-medium text-gray-900 dark:text-white">Language</h3>
+                </div>
+                <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400">
+                  <button
+                    onClick={() => setLanguage('no')}
+                    className={`px-3 py-1 rounded border ${language==='no' ? 'border-orange-500 text-orange-600' : 'border-gray-300 dark:border-gray-600'}`}
+                  >
+                    Norsk
+                  </button>
+                  <button
+                    onClick={() => setLanguage('en')}
+                    className={`px-3 py-1 rounded border ${language==='en' ? 'border-orange-500 text-orange-600' : 'border-gray-300 dark:border-gray-600'}`}
+                  >
+                    English
+                  </button>
+                </div>
+              </div>
+
 
               <div className="flex items-center justify-between py-4">
                 <div>

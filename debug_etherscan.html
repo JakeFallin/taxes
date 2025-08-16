@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Etherscan API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; }
+        input, button { margin: 5px; padding: 8px; }
+        .url { background: #f8f9fa; padding: 10px; border-radius: 5px; margin: 10px 0; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>Etherscan API Test</h1>
+    
+    <div>
+        <label>API Key:</label><br>
+        <input type="text" id="apiKey" placeholder="Enter your Etherscan API key" style="width: 400px;">
+    </div>
+    
+    <div>
+        <label>Wallet Address:</label><br>
+        <input type="text" id="address" placeholder="Enter wallet address" style="width: 400px;" value="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045">
+    </div>
+    
+    <div>
+        <button onclick="testBalance()">Test Balance</button>
+        <button onclick="testTransactions()">Test Transactions</button>
+        <button onclick="testApiKey()">Test API Key</button>
+    </div>
+    
+    <div id="result"></div>
+    
+    <script>
+        function showResult(message, isError = false) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<div class="result ${isError ? 'error' : 'success'}">${message}</div>`;
+        }
+        
+        function showUrl(url) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML += `<div class="url">URL: ${url}</div>`;
+        }
+        
+        async function testApiKey() {
+            const apiKey = document.getElementById('apiKey').value;
+            if (!apiKey) {
+                showResult('Please enter an API key', true);
+                return;
+            }
+            
+            const url = `https://api.etherscan.io/api?module=account&action=balance&address=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045&tag=latest&apikey=${apiKey}`;
+            showUrl(url);
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.status === '1') {
+                    showResult(`✅ API Key working! Balance: ${data.result} wei`);
+                } else {
+                    showResult(`❌ API Error: ${data.message}`, true);
+                }
+            } catch (error) {
+                showResult(`❌ Fetch Error: ${error.message}`, true);
+            }
+        }
+        
+        async function testBalance() {
+            const apiKey = document.getElementById('apiKey').value;
+            const address = document.getElementById('address').value;
+            
+            if (!apiKey || !address) {
+                showResult('Please enter both API key and address', true);
+                return;
+            }
+            
+            const url = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${apiKey}`;
+            showUrl(url);
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.status === '1') {
+                    const ethBalance = parseInt(data.result) / Math.pow(10, 18);
+                    showResult(`✅ Balance: ${ethBalance} ETH`);
+                } else {
+                    showResult(`❌ API Error: ${data.message}`, true);
+                }
+            } catch (error) {
+                showResult(`❌ Fetch Error: ${error.message}`, true);
+            }
+        }
+        
+        async function testTransactions() {
+            const apiKey = document.getElementById('apiKey').value;
+            const address = document.getElementById('address').value;
+            
+            if (!apiKey || !address) {
+                showResult('Please enter both API key and address', true);
+                return;
+            }
+            
+            const url = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=desc&apikey=${apiKey}`;
+            showUrl(url);
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.status === '1') {
+                    showResult(`✅ Found ${data.result.length} transactions`);
+                } else {
+                    showResult(`❌ API Error: ${data.message}`, true);
+                }
+            } catch (error) {
+                showResult(`❌ Fetch Error: ${error.message}`, true);
+            }
+        }
+    </script>
+</body>
+</html>

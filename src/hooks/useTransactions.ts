@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAuthContext } from '@/contexts/AuthContext'
-import { transactionService } from '@/lib/database'
+import { transactionService, userService } from '@/lib/database'
 
 export interface Transaction {
   id: string
@@ -64,6 +64,10 @@ export function useTransactions() {
     try {
       setLoading(true)
       setError('')
+      
+      // Ensure user profile exists first
+      await userService.ensureUserProfile(user.id, user.email || '')
+      
       const userTransactions = await transactionService.getUserTransactions(user.id)
       setTransactions(userTransactions)
     } catch (err) {

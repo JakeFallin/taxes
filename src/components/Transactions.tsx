@@ -1,4 +1,4 @@
-import { Search, Plus, ChevronDown, Info, MoreHorizontal } from "lucide-react";
+import { Search, Plus, ChevronDown, Info, MoreHorizontal, Receipt } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -8,12 +8,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { AddTransactionModal } from "./AddTransactionModal";
 
 const Transactions = () => {
+  const { t } = useLanguage();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [selectedWallets, setSelectedWallets] = useState<string[]>([]);
+  const [selectedCurrencies, setSelectedCurrencies] = useState<string[]>([]);
+  const [selectedDateRange, setSelectedDateRange] = useState<string>("All time");
+  const [selectedHide, setSelectedHide] = useState<string[]>([]);
+  const [showAddTransaction, setShowAddTransaction] = useState(false);
 
-  const transactions = [
+  const baseTransactions = [
     {
       category: "Send",
       sent: "-0.0004736 ETH",
@@ -70,6 +78,71 @@ const Transactions = () => {
       wallet: "Ethereum...ccd19"
     }
   ];
+
+  // Generate 45 additional mock transactions
+  const categories = ["Send", "Receive", "Trade", "Stake", "Unstake", "Payment"] as const;
+  const walletsList = [
+    "Ethereum...ccd19",
+    "Bitcoin...a9f21",
+    "Polygon...b7d42",
+    "BSC...93ac0",
+    "Solana...4f7e1"
+  ];
+  const randomBetween = (min: number, max: number) => Math.random() * (max - min) + min;
+  const pad = (n: number) => n.toString().padStart(2, '0');
+
+  const moreTransactions = Array.from({ length: 45 }, (_, idx) => {
+    const cat = categories[Math.floor(Math.random() * categories.length)];
+    const isSend = cat === "Send" || cat === "Payment" || cat === "Trade";
+    const amt = randomBetween(0.0001, 0.005);
+    const feeNok = randomBetween(0.8, 4.2);
+    const valNok = randomBetween(1.2, 250.0);
+    const gain = randomBetween(-12, 18);
+    const hour = Math.floor(randomBetween(0, 23));
+    const min = Math.floor(randomBetween(0, 59));
+    const wallet = walletsList[Math.floor(Math.random() * walletsList.length)];
+    return {
+      category: cat,
+      sent: isSend ? `-${amt.toFixed(7)} ${wallet.startsWith('Bitcoin') ? 'BTC' : 'ETH'}` : "—",
+      received: !isSend ? `${amt.toFixed(7)} ${wallet.startsWith('Bitcoin') ? 'BTC' : 'ETH'}` : "—",
+      fee: `NOK ${feeNok.toFixed(2)}`,
+      value: `NOK ${valNok.toFixed(2)}`,
+      gainLoss: `${gain >= 0 ? '+' : ''}NOK ${gain.toFixed(2)}`,
+      date: "16 Jun 2025",
+      time: `${((hour % 12) || 12)}:${pad(min)} ${hour < 12 ? 'AM' : 'PM'} UTC`,
+      wallet,
+    };
+  });
+
+  const transactions = [...baseTransactions, ...moreTransactions];
+
+  // Filter option lists
+  const walletFilterOptions = ["Select all", ...walletsList];
+  const currencyOptions = ["Select all", "ETH", "BTC", "MATIC", "BNB", "SOL"];
+  const dateRangeOptions = ["Today", "7D", "30D", "YTD", "1Y", "All time", "Custom…"];
+  const hideOptions = ["Zero value", "Internal transfers", "Duplicates", "Airdrops", "Fees only"];
+
+  const handleWalletToggle = (wallet: string) => {
+    if (wallet === "Select all") {
+      if (selectedWallets.length === walletFilterOptions.length - 1) setSelectedWallets([]);
+      else setSelectedWallets(walletFilterOptions.filter(w => w !== "Select all"));
+      return;
+    }
+    setSelectedWallets(prev => prev.includes(wallet) ? prev.filter(w => w !== wallet) : [...prev, wallet]);
+  };
+
+  const handleCurrencyToggle = (ccy: string) => {
+    if (ccy === "Select all") {
+      if (selectedCurrencies.length === currencyOptions.length - 1) setSelectedCurrencies([]);
+      else setSelectedCurrencies(currencyOptions.filter(c => c !== "Select all"));
+      return;
+    }
+    setSelectedCurrencies(prev => prev.includes(ccy) ? prev.filter(c => c !== ccy) : [...prev, ccy]);
+  };
+
+  const handleHideToggle = (opt: string) => {
+    setSelectedHide(prev => prev.includes(opt) ? prev.filter(h => h !== opt) : [...prev, opt]);
+  };
 
   const categoryOptions = [
     "Select all",
@@ -162,9 +235,12 @@ const Transactions = () => {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <Button className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white">
+        <Button 
+          className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white"
+          onClick={() => setShowAddTransaction(true)}
+        >
           <Plus size={16} />
-          Add New
+          {t('transactions.addNew')}
         </Button>
       </div>
 
@@ -174,7 +250,7 @@ const Transactions = () => {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={20} />
           <input
             type="text"
-            placeholder="AI powered search"
+            placeholder={t('transactions.searchPlaceholder')}
             className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent"
           />
         </div>
@@ -182,7 +258,7 @@ const Transactions = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-              Category {selectedCategories.length > 0 && `(${selectedCategories.length})`}
+              {t('transactions.category')} {selectedCategories.length > 0 && `(${selectedCategories.length})`}
               <ChevronDown size={16} />
             </Button>
           </DropdownMenuTrigger>
@@ -208,19 +284,54 @@ const Transactions = () => {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Button variant="outline" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-          Wallet
-          <ChevronDown size={16} />
-        </Button>
-        <Button variant="outline" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-          Currency
-          <ChevronDown size={16} />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+              {t('transactions.wallet')} {selectedWallets.length > 0 && `(${selectedWallets.length})`}
+              <ChevronDown size={16} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56 max-h-80 overflow-y-auto bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+            {walletFilterOptions.map((option) => (
+              <DropdownMenuItem
+                key={option}
+                className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                onSelect={(e) => e.preventDefault()}
+                onClick={() => handleWalletToggle(option)}
+              >
+                <Checkbox checked={option === 'Select all' ? selectedWallets.length === walletFilterOptions.length - 1 : selectedWallets.includes(option)} />
+                <span>{option}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+              {t('transactions.currency')} {selectedCurrencies.length > 0 && `(${selectedCurrencies.length})`}
+              <ChevronDown size={16} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56 max-h-80 overflow-y-auto bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+            {currencyOptions.map((option) => (
+              <DropdownMenuItem
+                key={option}
+                className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                onSelect={(e) => e.preventDefault()}
+                onClick={() => handleCurrencyToggle(option)}
+              >
+                <Checkbox checked={option === 'Select all' ? selectedCurrencies.length === currencyOptions.length - 1 : selectedCurrencies.includes(option)} />
+                <span>{option}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
         
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-              Status {selectedStatuses.length > 0 && `(${selectedStatuses.length})`}
+              {t('transactions.status')} {selectedStatuses.length > 0 && `(${selectedStatuses.length})`}
               <ChevronDown size={16} />
             </Button>
           </DropdownMenuTrigger>
@@ -246,14 +357,48 @@ const Transactions = () => {
           </DropdownMenuContent>
         </DropdownMenu>
         
-        <Button variant="outline" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-          Date
-          <ChevronDown size={16} />
-        </Button>
-        <Button variant="outline" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-          Hide
-          <ChevronDown size={16} />
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+              {t('transactions.date')}
+              <ChevronDown size={16} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-44 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+            {dateRangeOptions.map((option) => (
+              <DropdownMenuItem
+                key={option}
+                className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                onSelect={(e) => e.preventDefault()}
+                onClick={() => setSelectedDateRange(option)}
+              >
+                <span className={selectedDateRange === option ? 'font-semibold' : ''}>{option}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+              {t('transactions.hide')} {selectedHide.length > 0 && `(${selectedHide.length})`}
+              <ChevronDown size={16} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56 max-h-80 overflow-y-auto bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600">
+            {hideOptions.map((option) => (
+              <DropdownMenuItem
+                key={option}
+                className="flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                onSelect={(e) => e.preventDefault()}
+                onClick={() => handleHideToggle(option)}
+              >
+                <Checkbox checked={selectedHide.includes(option)} />
+                <span>{option}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
         <Button variant="outline" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
           CSV
           <ChevronDown size={16} />
@@ -269,23 +414,23 @@ const Transactions = () => {
                 <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">
                   <input type="checkbox" className="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800" />
                 </th>
-                <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">Category</th>
-                <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">Sent</th>
-                <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">Received</th>
-                <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">Fee</th>
+                <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">{t('transactions.th.category')}</th>
+                <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">{t('transactions.th.sent')}</th>
+                <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">{t('transactions.th.received')}</th>
+                <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">{t('transactions.th.fee')}</th>
                 <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">
                   <div className="flex items-center gap-1">
-                    Value
+                    {t('transactions.th.value')}
                     <Info size={14} className="text-gray-400 dark:text-gray-500" />
                   </div>
                 </th>
                 <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">
                   <div className="flex items-center gap-1">
-                    Gain/Income
+                    {t('transactions.th.gain')}
                     <Info size={14} className="text-gray-400 dark:text-gray-500" />
                   </div>
                 </th>
-                <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">Date</th>
+                <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300">{t('transactions.th.date')}</th>
                 <th className="text-left py-4 px-4 font-medium text-gray-700 dark:text-gray-300"></th>
               </tr>
             </thead>
@@ -330,6 +475,12 @@ const Transactions = () => {
           </table>
         </div>
       </div>
+
+      {/* Add Transaction Modal */}
+      <AddTransactionModal 
+        isOpen={showAddTransaction}
+        onClose={() => setShowAddTransaction(false)}
+      />
     </div>
   );
 };
