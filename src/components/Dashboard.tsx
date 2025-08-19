@@ -38,7 +38,7 @@ const menuItems = [
   { title: "Tax Loss Harvesting", icon: TrendingDown, url: "/tax-loss-harvesting", key: "tax-loss-harvesting" },
   { title: "Performance", icon: BarChart3, url: "/performance", key: "performance" },
   { title: "Prices", icon: DollarSign, url: "/prices", key: "prices" },
-  { title: "AI Assistant", icon: Bot, url: "/ai", key: "ai" },
+  { title: "AI Assistant", icon: Bot, url: "/ai", key: "AI Assistant" },
   { title: "Settings", icon: SettingsIcon, url: "/settings", key: "settings" },
 ];
 
@@ -330,7 +330,7 @@ const Dashboard = () => {
                         {t('dashboard.swapView')}
                       </Button>
                     </div>
-                    <div className="flex-1 p-4 pt-2 min-h-[360px] bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div className="flex-1 p-4 pt-2 min-h-[220px] sm:min-h-[280px] md:min-h-[360px] bg-gray-50 dark:bg-gray-800 rounded-lg">
                       <PerformanceChart />
                     </div>
                   </div>
@@ -351,7 +351,7 @@ const Dashboard = () => {
                         {t('dashboard.swapView')}
                       </Button>
                     </div>
-                    <div className="p-6 pt-2 flex-1 pie-chart-wrapper h-[360px]">
+                    <div className="p-6 pt-2 flex-1 pie-chart-wrapper h-[220px] sm:h-[280px] md:h-[360px]">
                       <EnhancedAssetDistributionChart isSwapped={isViewSwapped} />
                     </div>
                   </div>
@@ -514,7 +514,7 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="p-4 pt-2 flex-1 relative h-[360px] bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="p-4 pt-2 flex-1 relative h-[220px] sm:h-[280px] md:h-[360px] bg-gray-50 dark:bg-gray-800 rounded-lg">
                         <CompactPerformanceChart selectedPeriod={selectedPeriod} />
                       </div>
                       </div>
