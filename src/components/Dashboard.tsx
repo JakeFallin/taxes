@@ -330,14 +330,14 @@ const Dashboard = () => {
                         {t('dashboard.swapView')}
                       </Button>
                     </div>
-                    <div className="flex-1 p-4 pt-2 min-h-[220px] sm:min-h-[280px] md:min-h-[360px] bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div className="flex-1 p-4 pt-2 min-h-[220px] sm:min-h-[280px] md:min-h-[360px]">
                       <PerformanceChart />
                     </div>
                   </div>
                 ) : (
                   <div 
                     ref={assetDistributionRef}
-                    className="asset-distribution bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm asset-distribution-container flex-1 flex flex-col"
+                    className="asset-distribution bg-white dark:bg-gray-800 rounded-xl shadow-sm asset-distribution-container flex-1 flex flex-col"
                   >
                     <div className="p-6 pb-4 flex items-center justify-between">
                       <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('dashboard.assetDistribution')}</h2>
@@ -467,7 +467,7 @@ const Dashboard = () => {
                                     <span className="text-sm text-gray-600 dark:text-gray-300">{asset}</span>
                                   </div>
                                   <span className="text-sm text-gray-500">
-                                    ${data.totalValue.toLocaleString()}
+                                    NOK {data.totalValue.toLocaleString()}
                                   </span>
                                 </div>
                               ))
@@ -514,7 +514,7 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="p-4 pt-2 flex-1 relative h-[220px] sm:h-[280px] md:h-[360px] bg-gray-50 dark:bg-gray-800 rounded-lg">
+                      <div className="p-4 pt-2 flex-1 relative h-[220px] sm:h-[280px] md:h-[360px]">
                         <CompactPerformanceChart selectedPeriod={selectedPeriod} />
                       </div>
                       </div>
@@ -552,23 +552,7 @@ const Dashboard = () => {
               </div>
               <div className="flex items-center gap-4">
                
-                {/* Debug button */}
-                            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                console.log('🔍 Manual debug triggered')
-                console.log('🔍 Current wallets:', wallets)
-                const totalValue = getTotalPortfolioValue()
-                const nokValue = convertToNOK(totalValue, getDisplayCurrency())
-                console.log('🔍 Total value:', totalValue, getDisplayCurrency())
-                console.log('🔍 Total value in NOK:', nokValue.toLocaleString(), 'NOK')
-                console.log('🔍 Wallets loading:', walletsLoading)
-              }}
-              className="flex items-center gap-2 bg-red-100 dark:bg-red-700 border-red-300 dark:border-red-600 text-red-700 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-600"
-            >
-              Debug
-            </Button>
+                
                 {/* Dark mode toggle */}
                 <Button 
                   variant="outline" 

@@ -1,5 +1,6 @@
 
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Link } from "react-router-dom";
@@ -13,6 +14,7 @@ import {
 
 const Header = () => {
   const { language, setLanguage, t } = useLanguage();
+  const [openResources, setOpenResources] = useState(false);
   return (
     <header className="w-full bg-gray-50 backdrop-blur supports-[backdrop-filter]:bg-gray-50/60">
       <div className="container mx-auto px-4 py-5">
@@ -43,12 +45,21 @@ const Header = () => {
                 </Button>
               </NavigationMenuItem>
               
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-gray-700 hover:text-gray-900 border-b-2 border-transparent hover:border-orange-500 rounded-none px-0 pb-3 pt-3 bg-transparent hover:bg-transparent data-[state=open]:bg-transparent text-lg font-medium h-auto">
+              <NavigationMenuItem className="relative">
+                <button
+                  className="text-gray-700 hover:text-gray-900 border-b-2 border-transparent hover:border-orange-500 rounded-none px-0 pb-3 pt-3 text-lg font-medium h-auto bg-transparent"
+                  onClick={() => setOpenResources(v => !v)}
+                  onMouseEnter={() => setOpenResources(true)}
+                  onMouseLeave={() => setOpenResources(false)}
+                >
                   {t('header.resources')}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="w-48 p-2 bg-white shadow-lg border rounded-md">
+                </button>
+                {openResources && (
+                  <div
+                    className="absolute left-0 top-full mt-2 w-56 p-2 bg-white shadow-lg border rounded-md"
+                    onMouseEnter={() => setOpenResources(true)}
+                    onMouseLeave={() => setOpenResources(false)}
+                  >
                     <div className="flex flex-col space-y-1">
                       <Button variant="ghost" className="justify-start text-gray-700 hover:text-gray-900 hover:bg-gray-100">
                         {t('header.taxGuide')}
@@ -64,7 +75,7 @@ const Header = () => {
                       </Button>
                     </div>
                   </div>
-                </NavigationMenuContent>
+                )}
               </NavigationMenuItem>
               
               <NavigationMenuItem>

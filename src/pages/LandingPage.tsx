@@ -102,7 +102,10 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-6xl md:text-7xl lg:text-8xl font-bold text-gray-900 mb-6 leading-tight">
             {t('landing.slogan.line1')}
-            <br />
+         
+          </h2>
+          <h2 className="text-6xl md:text-7xl lg:text-8xl font-bold text-orange-500 mb-6 leading-tight">
+            
             {t('landing.slogan.line2')}
           </h2>
           <p className="text-2xl text-gray-600 max-w-2xl mx-auto">

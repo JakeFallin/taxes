@@ -91,7 +91,7 @@ const PerformanceChart = () => {
   }, [data]);
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 shadow-sm h-full flex flex-col">
+    <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm h-full flex flex-col">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('')}</h2>
         <div className="flex items-center gap-4">

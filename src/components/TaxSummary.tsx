@@ -62,13 +62,13 @@ const TaxSummary = () => {
           
           <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
             <h4 className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-2">{t('taxSummary.taxablePnL')}</h4>
-            <div className="text-green-600 dark:text-green-400 text-xl font-bold">$1,514.74</div>
+            <div className="text-green-600 dark:text-green-400 text-xl font-bold">NOK 144,514.74</div>
             <p className="text-gray-500 dark:text-gray-400 text-xs mt-1">{t('taxSummary.unrealizedGains')}</p>
           </div>
           
           <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
             <h4 className="text-gray-600 dark:text-gray-400 text-sm font-medium mb-2">{t('taxSummary.estimatedDue')}</h4>
-            <div className="text-orange-600 dark:text-orange-400 text-xl font-bold">$454.42</div>
+            <div className="text-orange-600 dark:text-orange-400 text-xl font-bold">NOK 45,894.42</div>
             <p className="text-gray-500 dark:text-gray-400 text-xs mt-1">{t('taxSummary.basedOnCurrent')}</p>
           </div>
         </div>
@@ -80,11 +80,11 @@ const TaxSummary = () => {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-gray-600 dark:text-gray-400">{t('taxSummary.shortGains')}</span>
-                <span className="text-gray-900 dark:text-white">$892.30</span>
+                <span className="text-gray-900 dark:text-white">NOK 87,492.30</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600 dark:text-gray-400">{t('taxSummary.longGains')}</span>
-                <span className="text-gray-900 dark:text-white">$622.44</span>
+                <span className="text-gray-900 dark:text-white">NOK 456,622.44</span>
               </div>
             </div>
           </div>
@@ -94,11 +94,11 @@ const TaxSummary = () => {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-gray-600 dark:text-gray-400">{t('taxSummary.potentialSavings')}</span>
-                <span className="text-green-600 dark:text-green-400">$136.33</span>
+                <span className="text-green-600 dark:text-green-400">NOK 136,455.33</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600 dark:text-gray-400">{t('taxSummary.harvestedLosses')}</span>
-                <span className="text-gray-900 dark:text-white">-$2,174.82</span>
+                <span className="text-gray-900 dark:text-white">-NOK 22,174.20</span>
               </div>
             </div>
           </div>

@@ -8,37 +8,37 @@ import { useLanguage } from '@/contexts/LanguageContext';
 // Footer link structure (Copied from app/page.tsx)
 const footerNavigation = {
   product: [
-    { name: 'Integrations', href: '/footer-pages/integrations' },
-    { name: 'Crypto Tax Calculator', href: '/footer-pages/tax-calculator' },
-    { name: 'Crypto Portfolio Tracker', href: '/footer-pages/portfolio-tracker' },
-    { name: 'Crypto Profit Calculator', href: '/footer-pages/profit-calculator' },
-    { name: 'For Accountants', href: '/footer-pages/for-accountants' },
-    { name: 'For Businesses', href: '/footer-pages/for-businesses' },
+    { nameKey: 'footer.link.integrations', href: '/footer-pages/integrations' },
+    { nameKey: 'footer.link.taxCalculator', href: '/footer-pages/tax-calculator' },
+    { nameKey: 'footer.link.tracker', href: '/footer-pages/portfolio-tracker' },
+    { nameKey: 'footer.link.profit', href: '/footer-pages/profit-calculator' },
+    { nameKey: 'footer.link.accountants', href: '/footer-pages/for-accountants' },
+    { nameKey: 'footer.link.businesses', href: '/footer-pages/for-businesses' },
   ],
   resources: [
-    { name: 'Pricing', href: '/footer-pages/pricing' },
-    { name: 'Help & Support', href: '/footer-pages/support' },
-    { name: 'Crypto Tax Accountants', href: '/footer-pages/tax-accountants' },
-    { name: 'Crypto Tax Guide', href: '/footer-pages/tax-guide' },
-    { name: 'Crypto Glossary', href: '/footer-pages/glossary' },
-    { name: 'Discuss', href: '/footer-pages/discuss' },
-    { name: 'Feedback', href: '/footer-pages/feedback' },
-    { name: 'Compare', href: '/footer-pages/compare' },
+    { nameKey: 'footer.link.pricing', href: '/footer-pages/pricing' },
+    { nameKey: 'footer.link.support', href: '/footer-pages/support' },
+    { nameKey: 'footer.link.taxAccountants', href: '/footer-pages/tax-accountants' },
+    { nameKey: 'footer.link.taxGuide', href: '/footer-pages/tax-guide' },
+    { nameKey: 'footer.link.glossary', href: '/footer-pages/glossary' },
+    { nameKey: 'footer.link.discuss', href: '/footer-pages/discuss' },
+    { nameKey: 'footer.link.feedback', href: '/footer-pages/feedback' },
+    { nameKey: 'footer.link.compare', href: '/footer-pages/compare' },
   ],
   company: [
-    { name: 'Blog', href: '/footer-pages/blog' },
-    { name: 'About', href: '/footer-pages/about' },
-    { name: 'Partners', href: '/footer-pages/partners' },
-    { name: 'Affiliates', href: '/footer-pages/affiliates' },
-    { name: 'Media', href: '/footer-pages/media' },
-    { name: 'Contact Us', href: '/footer-pages/contact' },
+    { nameKey: 'footer.link.blog', href: '/footer-pages/blog' },
+    { nameKey: 'footer.link.about', href: '/footer-pages/about' },
+    { nameKey: 'footer.link.partners', href: '/footer-pages/partners' },
+    { nameKey: 'footer.link.affiliates', href: '/footer-pages/affiliates' },
+    { nameKey: 'footer.link.media', href: '/footer-pages/media' },
+    { nameKey: 'footer.link.contact', href: '/footer-pages/contact' },
   ],
   legal: [
-    { name: 'Privacy policy', href: '/footer-pages/privacy' },
-    { name: 'Terms of Service', href: '/footer-pages/terms' },
-    { name: 'Disclaimer', href: '/footer-pages/disclaimer' },
-    { name: 'Security', href: '/footer-pages/security' },
-    { name: 'Cookie Preferences', href: '/footer-pages/cookies' },
+    { nameKey: 'footer.link.privacy', href: '/footer-pages/privacy' },
+    { nameKey: 'footer.link.terms', href: '/footer-pages/terms' },
+    { nameKey: 'footer.link.disclaimer', href: '/footer-pages/disclaimer' },
+    { nameKey: 'footer.link.security', href: '/footer-pages/security' },
+    { nameKey: 'footer.link.cookies', href: '/footer-pages/cookies' },
   ],
 }
 
@@ -90,9 +90,9 @@ export default function Footer() {
                   <h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{t('footer.product')}</h3>
                   <ul role="list" className="mt-4 space-y-3">
                     {footerNavigation.product.map((item) => (
-                      <li key={item.name}>
+                      <li key={item.nameKey}>
                         <Link to={item.href} className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
-                          {item.name}
+                          {t(item.nameKey as any)}
                         </Link>
                       </li>
                     ))}
@@ -103,9 +103,9 @@ export default function Footer() {
                   <h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{t('footer.resources')}</h3>
                   <ul role="list" className="mt-4 space-y-3">
                     {footerNavigation.resources.map((item) => (
-                      <li key={item.name}>
+                      <li key={item.nameKey}>
                         <Link to={item.href} className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
-                          {item.name}
+                          {t(item.nameKey as any)}
                         </Link>
                       </li>
                     ))}
@@ -118,9 +118,9 @@ export default function Footer() {
                   <h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{t('footer.company')}</h3>
                   <ul role="list" className="mt-4 space-y-3">
                     {footerNavigation.company.map((item) => (
-                      <li key={item.name}>
+                      <li key={item.nameKey}>
                         <Link to={item.href} className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
-                          {item.name}
+                          {t(item.nameKey as any)}
                         </Link>
                       </li>
                     ))}
@@ -131,9 +131,9 @@ export default function Footer() {
                   <h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{t('footer.legal')}</h3>
                   <ul role="list" className="mt-4 space-y-3">
                     {footerNavigation.legal.map((item) => (
-                      <li key={item.name}>
+                      <li key={item.nameKey}>
                         <Link to={item.href} className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
-                          {item.name}
+                          {t(item.nameKey as any)}
                         </Link>
                       </li>
                     ))}

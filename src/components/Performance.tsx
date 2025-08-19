@@ -299,19 +299,19 @@ const Performance = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <PerformanceCard
           title={t('performance.totalReturn')}
-          value="$1,514.74"
+          value="NOK 1,514.74"
           percentage="+13.10%"
           isPositive={true}
         />
         <PerformanceCard
           title={t('performance.unrealized')}
-          value="$1,245.32"
+          value="NOK 1,245.32"
           percentage="+10.85%"
           isPositive={true}
         />
         <PerformanceCard
           title={t('performance.realized')}
-          value="$269.42"
+          value="NOK 269.42"
           percentage="+2.25%"
           isPositive={true}
         />

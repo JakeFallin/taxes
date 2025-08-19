@@ -72,11 +72,7 @@ const TaxLossHarvesting = () => {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex gap-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
-            {(['1M','3M','YTD','1Y','ALL'] as const).map(p => (
-              <Button key={p} variant={period===p? 'default':'ghost'} size="sm" onClick={() => setPeriod(p)} className={period===p? 'bg-orange-500 dark:bg-orange-600 text-white':'text-gray-600 dark:text-gray-300'}>{p}</Button>
-            ))}
-          </div>
+          
           <Button variant="outline" size="sm" className="flex items-center gap-2">
             <Filter size={16} /> {t('tlh.settings')}
           </Button>

@@ -42,7 +42,12 @@ const App = () => (
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
-            <Footer />
+            {/* Hide footer on dashboard and authenticated subpages */}
+            <Routes>
+              <Route path="/" element={<Footer />} />
+              <Route path="/auth" element={<Footer />} />
+              <Route path="*" element={<></>} />
+            </Routes>
           </div>
         </BrowserRouter>
       </TooltipProvider>
