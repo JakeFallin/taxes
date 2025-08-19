@@ -38,7 +38,7 @@ const menuItems = [
   { title: "Tax Loss Harvesting", icon: TrendingDown, url: "/tax-loss-harvesting", key: "tax-loss-harvesting" },
   { title: "Performance", icon: BarChart3, url: "/performance", key: "performance" },
   { title: "Prices", icon: DollarSign, url: "/prices", key: "prices" },
-  { title: "AI Assistant", icon: Bot, url: "/ai", key: "AI Assistant" },
+  { title: "AI Assistant", icon: Bot, url: "/ai", key: "ai" },
   { title: "Settings", icon: SettingsIcon, url: "/settings", key: "settings" },
 ];
 
@@ -396,11 +396,6 @@ const Dashboard = () => {
                             {usePlaceholders ? 'NOK 3,341,345,823.965' : 'NOK 0.00'}
                           </p>
                         </div>
-                        
-                        <div className="flex">
-                          
-                        </div>
-
                         <div className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3">
                           <p className="text-sm text-black dark:text-gray-400 mb-1 font-medium">{t('dashboard.assets')}</p>
                           <p className="text-lg font-semibold text-black dark:text-white">
@@ -444,11 +439,11 @@ const Dashboard = () => {
                       <div className="flex items-center justify-between gap-6 p-4 pt-2 flex-1">
                         {/* Asset list on the left */}
                         <ScrollArea className="flex-1 h-full">
-                          <div className="space-y-3 pr-1">
+                          <div className="pr-1">
                             {transactionsLoading ? (
                               <div className="text-sm text-gray-500">Loading assets...</div>
                             ) : Object.keys(portfolioSummary).length === 0 ? (
-                              <div className="text-[11px] leading-tight text-gray-600 dark:text-gray-300 space-y-0.5">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-1 gap-x-4 text-[11px] leading-tight text-gray-600 dark:text-gray-300">
                                 {mockSmallDistribution.map((row) => (
                                   <div key={row.asset} className="flex items-center gap-2">
                                     <span>{row.asset}</span>
@@ -457,20 +452,22 @@ const Dashboard = () => {
                                 ))}
                               </div>
                             ) : (
-                              Object.entries(portfolioSummary).map(([asset, data]) => (
-                                <div key={asset} className="flex items-center justify-between">
-                                  <div className="flex items-center gap-3">
-                                    <div 
-                                      className="w-3 h-3 rounded-full flex-shrink-0" 
-                                      style={{ backgroundColor: `hsl(${Math.random() * 360}, 70%, 50%)` }}
-                                    />
-                                    <span className="text-sm text-gray-600 dark:text-gray-300">{asset}</span>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
+                                {Object.entries(portfolioSummary).map(([asset, data]) => (
+                                  <div key={asset} className="flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                      <div 
+                                        className="w-3 h-3 rounded-full flex-shrink-0" 
+                                        style={{ backgroundColor: `hsl(${Math.random() * 360}, 70%, 50%)` }}
+                                      />
+                                      <span className="text-sm text-gray-600 dark:text-gray-300">{asset}</span>
+                                    </div>
+                                    <span className="text-sm text-gray-500">
+                                      NOK {data.totalValue.toLocaleString()}
+                                    </span>
                                   </div>
-                                  <span className="text-sm text-gray-500">
-                                    NOK {data.totalValue.toLocaleString()}
-                                  </span>
-                                </div>
-                              ))
+                                ))}
+                              </div>
                             )}
                           </div>
                         </ScrollArea>

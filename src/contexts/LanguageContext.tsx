@@ -426,7 +426,7 @@ const DICT: Dictionary = {
   'landing.hero.line1': { en: 'Track Your Crypto', no: 'Spor alle transaksjoner' },
   'landing.hero.line2': { en: 'Calculate Your Taxes', no: 'Beregn skatten din' },
   'landing.hero.auto': { en: 'Automatically', no: 'Automatisk' },
-  'landing.hero.desc': { en: 'Connect your wallets and exchanges, track your assets automatically, and generate accurate tax reports with ease. Take control of your crypto finances.', no: 'Koble til lommebøker og børser, spor eiendeler automatisk, og generer nøyaktige skatterapporter. Ta kontroll over din kryptofinans.' },
+  'landing.hero.desc': { en: 'Connect your wallets and exchanges, track your assets automatically, and generate accurate tax reports with ease. Take control of your crypto finances.', no: 'Koble til lommebøker og børser, spor eiendeler automatisk, og generer nøyaktige skatterapporter. Krypto gjort enkelt.' },
   'landing.hero.cta': { en: 'Get started', no: 'Kom i gang' },
   'landing.hero.how': { en: 'See How It Works →', no: 'Se hvordan det fungerer →' },
   'landing.hero.badge': { en: 'No credit card required • Set up in 2 minutes', no: 'Ingen kredittkort nødvendig • Kom i gang på 2 minutter' },
