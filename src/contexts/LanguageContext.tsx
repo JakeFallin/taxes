@@ -42,7 +42,7 @@ const DICT: Dictionary = {
   'header.support': { en: 'Support', no: 'Brukerstøtte' },
   'header.pricing': { en: 'Pricing', no: 'Priser' },
   'header.login': { en: 'Log in', no: 'Logg inn' },
-  'header.signup': { en: 'Sign Up', no: 'Registrer deg' },
+  'header.signup': { en: 'Sign up', no: 'Registrer deg' },
 
   // Footer
   'footer.product': { en: 'Product', no: 'Produkt' },
@@ -405,8 +405,8 @@ const DICT: Dictionary = {
   'settings.sub.feature.taxReports': { en: 'Tax reports for 2024 and all past years', no: 'Skatterapporter for 2024 og alle tidligere år' },
   'settings.sub.feature.taxLots': { en: 'Tax lots breakdown', no: 'Detaljert skattegrunnlag' },
   'settings.sub.feature.tlh': { en: 'Tax loss harvesting', no: 'Skattetapsrealisering' },
-  'settings.sub.feature.performance': { en: 'Performance tracking', no: 'Ytelsessporing' },
   'settings.sub.feature.prioritySupport': { en: 'Priority support', no: 'Prioritert support' },
+  'settings.sub.feature.performance': { en: 'Performance tracking', no: 'Ytelsessporing' },                   
   'settings.sub.feature.changeCostBasis': { en: 'Change cost basis method by year', no: 'Endre kostpris-metode per år' },
   'settings.sub.feature.full.accountManager': { en: 'A dedicated account manager that works with you to manage your CoinTracker account.', no: 'En dedikert kundekontakt som hjelper deg å administrere CoinTracker-kontoen din.' },
   'settings.sub.feature.full.csvHelp': { en: 'Personal assistance in managing and importing CSV files.', no: 'Personlig hjelp med håndtering og import av CSV-filer.' },
@@ -428,7 +428,7 @@ const DICT: Dictionary = {
   'landing.hero.auto': { en: 'Automatically', no: 'Automatisk' },
   'landing.hero.desc': { en: 'Connect your wallets and exchanges, track your assets automatically, and generate accurate tax reports with ease. Take control of your crypto finances.', no: 'Koble til lommebøker og børser, spor eiendeler automatisk, og generer nøyaktige skatterapporter. Krypto gjort enkelt.' },
   'landing.hero.cta': { en: 'Get started', no: 'Kom i gang' },
-  'landing.hero.how': { en: 'See How It Works →', no: 'Se hvordan det fungerer →' },
+  'landing.hero.how': { en: 'See how it works', no: 'Se hvordan det fungerer →' },
   'landing.hero.badge': { en: 'No credit card required • Set up in 2 minutes', no: 'Ingen kredittkort nødvendig • Kom i gang på 2 minutter' },
   'landing.whatYouGet': { en: 'What You Get', no: 'Dette får du' },
   'landing.everythingTitle': { en: 'Everything You Need in One Place', no: 'Alt du trenger på ett sted' },

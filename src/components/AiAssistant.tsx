@@ -92,7 +92,6 @@ Disclaimer: This is general information, not tax or legal advice. Consult a qual
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t('ai.title')}</h1>
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => sendMessage('Suggest a diversified crypto portfolio with low risk.')}>{t('ai.quick.investment')}</Button>
           <Button variant="outline" onClick={() => sendMessage('Format this CSV header for wallets: date,type,asset,amount,fee,tx_hash,note')}>{t('ai.quick.csv')}</Button>

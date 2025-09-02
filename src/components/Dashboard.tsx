@@ -1,6 +1,6 @@
 
 import { Sidebar, SidebarContent, SidebarProvider, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarFooter } from "@/components/ui/sidebar";
-import { Home, Wallet, PieChart, Receipt, TrendingUp, TrendingDown, BarChart3, DollarSign, Settings as SettingsIcon, LogOut, Heart, Ban, FileText, Sun, Moon, RotateCcw, Bot } from "lucide-react";
+import { Home, Wallet, PieChart, Receipt, TrendingUp, TrendingDown, BarChart3, DollarSign, Settings as SettingsIcon, Heart, Ban, FileText, Sun, Moon, RotateCcw, Bot } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useWallets } from "@/hooks/useWallets";
@@ -22,7 +22,7 @@ import Performance from "./Performance";
 import Settings from "./Settings";
 import { BlockchainServiceTest } from "./BlockchainServiceTest";
 import AiAssistant from "./AiAssistant";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import EnhancedAssetDistributionChart from "./EnhancedAssetDistributionChart";
 import CompactPerformanceChart from "./CompactPerformanceChart";
@@ -42,7 +42,7 @@ const menuItems = [
   { title: "Settings", icon: SettingsIcon, url: "/settings", key: "settings" },
 ];
 
-const AppSidebar = ({ activeTab, setActiveTab }: { activeTab: string; setActiveTab: (tab: string) => void }) => {
+const AppSidebar = ({ activeTab, setActiveTab, isDarkMode, onToggleDarkMode }: { activeTab: string; setActiveTab: (tab: string) => void; isDarkMode: boolean; onToggleDarkMode: () => void }) => {
   const { t } = useLanguage();
   const menuLabel = (key: string) => {
     switch (key) {
@@ -59,11 +59,7 @@ const AppSidebar = ({ activeTab, setActiveTab }: { activeTab: string; setActiveT
       default: return key;
     }
   };
-  const navigate = useNavigate();
-  
-  const handleLogOut = () => {
-    navigate("/");
-  };
+  // const navigate = useNavigate();
 
   return (
     <Sidebar 
@@ -72,7 +68,7 @@ const AppSidebar = ({ activeTab, setActiveTab }: { activeTab: string; setActiveT
     >
       <SidebarContent>
         <div className="p-6 flex items-center gap-3 group-data-[collapsible=icon]:p-3 group-data-[collapsible=icon]:justify-center group-data-[state=collapsed]:border-none">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white group-data-[collapsible=icon]:hidden">Kryptools</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white group-data-[collapsible=icon]:hidden">Kryptools</h2>
         </div>
         <SidebarGroup>
           <SidebarGroupContent className="pt-4">
@@ -103,18 +99,27 @@ const AppSidebar = ({ activeTab, setActiveTab }: { activeTab: string; setActiveT
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton 
-              asChild 
-              tooltip="Log Out"
+            <SidebarMenuButton
+              asChild
+              tooltip={isDarkMode ? t('common.lightMode') : t('common.darkMode')}
               className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-800 group-data-[state=collapsed]:text-gray-400 group-data-[state=collapsed]:hover:text-white group-data-[state=collapsed]:hover:bg-gray-700"
             >
-              <button 
-                onClick={handleLogOut}
+              <button
+                onClick={onToggleDarkMode}
                 className="flex items-center gap-3 px-6 py-3 w-full text-left group-data-[collapsible=icon]:px-3 group-data-[collapsible=icon]:justify-center"
               >
-                <LogOut size={20} />
-                <span className="group-data-[collapsible=icon]:hidden">Log Out</span>
+                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+                <span className="group-data-[collapsible=icon]:hidden">{isDarkMode ? t('common.lightMode') : t('common.darkMode')}</span>
               </button>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              tooltip={t('common.collapse') || 'Collapse'}
+              className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-800 group-data-[state=collapsed]:text-gray-400 group-data-[state=collapsed]:hover:text-white group-data-[state=collapsed]:hover:bg-gray-700"
+            >
+              <SidebarTrigger className="h-10 w-full justify-start px-6 group-data-[collapsible=icon]:px-3 group-data-[collapsible=icon]:justify-center" />
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -319,7 +324,7 @@ const Dashboard = () => {
                 {!isViewSwapped ? (
                   <div ref={portfolioOverviewRef} className="portfolio-overview bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm flex-1 flex flex-col">
                     <div className="p-4 pb-2 flex items-center justify-between">
-                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('dashboard.portfolioPerformance')}</h2>
+                      <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('dashboard.portfolioOverview')}</h2>
                       <Button
                         variant="outline"
                         size="sm"
@@ -538,32 +543,9 @@ const Dashboard = () => {
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="min-h-screen flex w-full bg-gray-50 dark:bg-gray-900">
-        <AppSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+        <AppSidebar activeTab={activeTab} setActiveTab={setActiveTab} isDarkMode={isDarkMode} onToggleDarkMode={toggleDarkMode} />
         <main className="flex-1 bg-gray-50 dark:bg-gray-900">
           <div className="p-6">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-4">
-                <div className="flex items-center gap-3">
-                  <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{getPageTitle()}</h1>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-               
-                
-                {/* Dark mode toggle */}
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={toggleDarkMode}
-                  className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-                >
-                  {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
-                  {isDarkMode ? t('common.lightMode') : t('common.darkMode')}
-                </Button>
-                <SidebarTrigger className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800" />
-              </div>
-            </div>
-            
             {renderContent()}
           </div>
         </main>

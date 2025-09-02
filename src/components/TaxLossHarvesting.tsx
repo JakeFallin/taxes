@@ -62,17 +62,15 @@ const TaxLossHarvesting = () => {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
+      {/* Header (title removed) */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">2025 {t('tlh.title')}</h1>
-          <div className="flex items-center gap-3 mt-2">
+          <div className="flex items-center gap-3">
             <span className="text-gray-600 dark:text-gray-300">January 1 2025 to today</span>
             <span className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs font-medium px-2.5 py-0.5 rounded">{t('tlh.inProgress')}</span>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          
           <Button variant="outline" size="sm" className="flex items-center gap-2">
             <Filter size={16} /> {t('tlh.settings')}
           </Button>

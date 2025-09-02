@@ -6,10 +6,9 @@ const Taxes = () => {
   const { t } = useLanguage();
   const [summaryTab, setSummaryTab] = useState<'exchanges' | 'wallets' | 'imported' | 'nfts'>('exchanges')
   return <div className="space-y-6">
-      {/* Header */}
+      {/* Header (title removed) */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">2025 {t('taxes.title')}</h1>
           <ChevronDown size={20} className="text-gray-600 dark:text-gray-400" />
           <div className="text-sm text-gray-600 dark:text-gray-400">January 1 2025 to today</div>
           <span className="px-2 py-1 bg-yellow-400 dark:bg-yellow-500 text-black dark:text-black text-xs font-medium rounded">

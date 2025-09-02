@@ -33,12 +33,12 @@ const LandingPage = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-6 sm:space-y-0 sm:space-x-6">
             <Button 
               size="lg" 
-              className="bg-blue-500 hover:bg-blue-600 text-white px-12 py-4 text-xl font-semibold"
+              className="bg-[#132549] hover:bg-[#132549] text-white px-16 py-5 text-2xl font-semibold"
               onClick={() => navigate('/auth')}
             >
               {t('landing.hero.cta')}
             </Button>
-            <Button variant="ghost" size="lg" className="text-gray-700 hover:text-gray-900 px-8 py-4 text-xl underline">
+            <Button variant="ghost" size="lg" className="text-[#132549] hover:text-[#132549] px-16 py-5 text-2xl underline">
               {t('landing.hero.how')}
             </Button>
           </div>

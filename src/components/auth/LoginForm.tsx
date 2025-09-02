@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -20,6 +21,7 @@ export function LoginForm({ onSwitchToSignup, onSuccess }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [oauthLoading, setOauthLoading] = useState<string | null>(null)
   
   const { signIn } = useAuthContext()
 
@@ -42,6 +44,13 @@ export function LoginForm({ onSwitchToSignup, onSuccess }: LoginFormProps) {
       setLoading(false)
     }
   }
+
+  const handleProvider = (provider: string) => {
+    setError('')
+    setOauthLoading(provider)
+  }
+
+  const allDisabled = loading || !!oauthLoading
 
   return (
     <Card className="w-full max-w-md mx-auto">
@@ -68,7 +77,7 @@ export function LoginForm({ onSwitchToSignup, onSuccess }: LoginFormProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              disabled={loading}
+              disabled={allDisabled}
             />
           </div>
           
@@ -82,7 +91,7 @@ export function LoginForm({ onSwitchToSignup, onSuccess }: LoginFormProps) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                disabled={loading}
+                disabled={allDisabled}
               />
               <Button
                 type="button"
@@ -90,7 +99,7 @@ export function LoginForm({ onSwitchToSignup, onSuccess }: LoginFormProps) {
                 size="sm"
                 className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
                 onClick={() => setShowPassword(!showPassword)}
-                disabled={loading}
+                disabled={allDisabled}
               >
                 {showPassword ? (
                   <EyeOff className="h-4 w-4" />
@@ -104,7 +113,7 @@ export function LoginForm({ onSwitchToSignup, onSuccess }: LoginFormProps) {
           <Button 
             type="submit" 
             className="w-full" 
-            disabled={loading}
+            disabled={allDisabled}
           >
             {loading ? (
               <>
@@ -116,6 +125,69 @@ export function LoginForm({ onSwitchToSignup, onSuccess }: LoginFormProps) {
             )}
           </Button>
         </form>
+
+        {/* Social / External providers */}
+        <div className="my-6">
+          <div className="relative">
+            <Separator />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="bg-white px-2 text-xs text-gray-500">Or continue with</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <Button variant="outline" className="w-full" onClick={() => handleProvider('BankID')} disabled={allDisabled}>
+            {oauthLoading === 'BankID' ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                BankID
+              </>
+            ) : (
+              'BankID'
+            )}
+          </Button>
+          <Button variant="outline" className="w-full" onClick={() => handleProvider('Vipps')} disabled={allDisabled}>
+            {oauthLoading === 'Vipps' ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Vipps
+              </>
+            ) : (
+              'Vipps'
+            )}
+          </Button>
+          <Button variant="outline" className="w-full" onClick={() => handleProvider('Google')} disabled={allDisabled}>
+            {oauthLoading === 'Google' ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Google
+              </>
+            ) : (
+              'Google'
+            )}
+          </Button>
+          <Button variant="outline" className="w-full" onClick={() => handleProvider('Meta')} disabled={allDisabled}>
+            {oauthLoading === 'Meta' ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Meta
+              </>
+            ) : (
+              'Meta'
+            )}
+          </Button>
+          <Button variant="outline" className="w-full sm:col-span-1 col-span-2" onClick={() => handleProvider('Github')} disabled={allDisabled}>
+            {oauthLoading === 'Github' ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                GitHub
+              </>
+            ) : (
+              'GitHub'
+            )}
+          </Button>
+        </div>
         
         <div className="mt-4 text-center text-sm">
           <span className="text-gray-600">{t('auth.noAccount')}</span>
@@ -123,7 +195,7 @@ export function LoginForm({ onSwitchToSignup, onSuccess }: LoginFormProps) {
             type="button"
             onClick={onSwitchToSignup}
             className="text-blue-600 hover:text-blue-800 font-medium"
-            disabled={loading}
+            disabled={allDisabled}
           >
             {t('auth.signup')}
           </button>
