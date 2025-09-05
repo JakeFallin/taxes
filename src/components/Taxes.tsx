@@ -10,7 +10,7 @@ const Taxes = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <ChevronDown size={20} className="text-gray-600 dark:text-gray-400" />
-          <div className="text-sm text-gray-600 dark:text-gray-400">January 1 2025 to today</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">{t('common.dateRangeYtd')}</div>
           <span className="px-2 py-1 bg-yellow-400 dark:bg-yellow-500 text-black dark:text-black text-xs font-medium rounded">
             {t('taxes.inProgress')}
           </span>
@@ -203,16 +203,16 @@ const Taxes = () => {
             <div className="border-b border-gray-200 dark:border-gray-700 mb-4">
               <nav className="-mb-px flex space-x-8">
                 <button onClick={() => setSummaryTab('exchanges')} className={`${summaryTab === 'exchanges' ? 'border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-600'} border-b-2 py-2 px-1 text-sm font-medium`}>
-                  Exchanges
+                  {t('taxes.tab.exchanges')}
                 </button>
-                <button onClick={() => setSummaryTab('wallets')} className={`${summaryTab === 'wallets' ? 'border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover;border-gray-600'} border-b-2 py-2 px-1 text-sm font-medium`}>
-                  Crypto wallets
+                <button onClick={() => setSummaryTab('wallets')} className={`${summaryTab === 'wallets' ? 'border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover;border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-600'} border-b-2 py-2 px-1 text-sm font-medium`}>
+                  {t('taxes.tab.wallets')}
                 </button>
                 <button onClick={() => setSummaryTab('imported')} className={`${summaryTab === 'imported' ? 'border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:border-gray-600'} border-b-2 py-2 px-1 text-sm font-medium`}>
-                  Imported wallets
+                  {t('taxes.tab.imported')}
                 </button>
                 <button onClick={() => setSummaryTab('nfts')} className={`${summaryTab === 'nfts' ? 'border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300 dark:hover;border-gray-600'} border-b-2 py-2 px-1 text-sm font-medium`}>
-                  NFTs
+                  {t('taxes.tab.nfts')}
                 </button>
               </nav>
             </div>
@@ -428,7 +428,7 @@ const Taxes = () => {
                     <Download size={16} className="text-gray-400 dark:text-gray-500" />
                     <span className="text-gray-900 dark:text-white">Transaction History CSV</span>
                   </div>
-                  <Button variant="outline" size="sm" className="w-full border-green-300 dark:border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-700 bg-green-50 dark:bg-green-900/20">
+                  <Button variant="outline" size="sm" className="w-full border-orange-300 dark:border-orange-600 text-orange-700 dark:text-orange-300 hover:bg-orange-50 dark:hover:bg-orange-700 bg-orange-50 dark:bg-orange-900/20">
                     <Download size={14} className="mr-2" />
                     {t('taxes.downloadCsv')}
                   </Button>
@@ -442,7 +442,7 @@ const Taxes = () => {
                       <div className="text-xs text-gray-500 dark:text-gray-400">The Capital Gains CSV includes only transactions that resulted in a capital gain.</div>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm" className="w-full border-green-300 dark:border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-700 bg-green-50 dark:bg-green-900/20">
+                  <Button variant="outline" size="sm" className="w-full border-orange-300 dark:border-orange-600 text-orange-700 dark:text-orange-300 hover:bg-orange-50 dark:hover:bg-orange-700 bg-orange-50 dark:bg-orange-900/20">
                     <Download size={14} className="mr-2" />
                     {t('taxes.downloadCsv')}
                   </Button>
@@ -459,7 +459,7 @@ const Taxes = () => {
                       <div className="text-xs text-gray-500 dark:text-gray-400">Summarizes staking rewards, airdrops, mining, and other taxable income.</div>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm" className="w-full border-green-300 dark:border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-700 bg-green-50 dark:bg-green-900/20">
+                  <Button variant="outline" size="sm" className="w-full border-orange-300 dark:border-orange-600 text-orange-700 dark:text-orange-300 hover:bg-orange-50 dark:hover:bg-orange-700 bg-orange-50 dark:bg-orange-900/20">
                     <Download size={14} className="mr-2" />
                     {t('taxes.downloadCsv')}
                   </Button>
@@ -473,7 +473,7 @@ const Taxes = () => {
                       <div className="text-xs text-gray-500 dark:text-gray-400">Per-lot acquisition/disposal dates, cost basis, and proceeds (FIFO mock).</div>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm" className="w-full border-green-300 dark:border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-700 bg-green-50 dark:bg-green-900/20">
+                  <Button variant="outline" size="sm" className="w-full border-orange-300 dark:border-orange-600 text-orange-700 dark:text-orange-300 hover:bg-orange-50 dark:hover:bg-orange-700 bg-orange-50 dark:bg-orange-900/20">
                     <Download size={14} className="mr-2" />
                     {t('taxes.downloadCsv')}
                   </Button>

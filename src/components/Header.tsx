@@ -20,8 +20,8 @@ const Header = () => {
       <div className="container mx-auto px-4 py-5">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <span className="font-bold text-gray-900 text-xl">Kryptools</span>
+          <Link to="/" className="flex items-center py-3">
+            <span className="font-bold text-gray-900 text-3xl leading-none">Kryptools</span>
           </Link>
 
           {/* Navigation Menu */}

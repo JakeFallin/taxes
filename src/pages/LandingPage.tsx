@@ -33,7 +33,7 @@ const LandingPage = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-6 sm:space-y-0 sm:space-x-6">
             <Button 
               size="lg" 
-              className="bg-[#132549] hover:bg-[#132549] text-white px-16 py-5 text-2xl font-semibold"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-16 py-5 text-2xl font-semibold"
               onClick={() => navigate('/auth')}
             >
               {t('landing.hero.cta')}

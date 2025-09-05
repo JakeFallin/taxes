@@ -24,6 +24,7 @@ import { BlockchainServiceTest } from "./BlockchainServiceTest";
 import AiAssistant from "./AiAssistant";
 // import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useNavigate } from "react-router-dom";
 import EnhancedAssetDistributionChart from "./EnhancedAssetDistributionChart";
 import CompactPerformanceChart from "./CompactPerformanceChart";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -67,8 +68,11 @@ const AppSidebar = ({ activeTab, setActiveTab, isDarkMode, onToggleDarkMode }: {
       collapsible="icon"
     >
       <SidebarContent>
-        <div className="p-6 flex items-center gap-3 group-data-[collapsible=icon]:p-3 group-data-[collapsible=icon]:justify-center group-data-[state=collapsed]:border-none">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white group-data-[collapsible=icon]:hidden">Kryptools</h2>
+        <div className="p-6 h-20 flex items-center gap-4 group-data-[collapsible=icon]:justify-center group-data-[state=collapsed]:border-none">
+          {/* Full logo text when expanded */}
+          <h2 className="text-5xl leading-none font-bold text-gray-900 dark:text-white group-data-[collapsible=icon]:hidden">Kryptools</h2>
+          {/* Compact logo when collapsed */}
+          <div className="hidden group-data-[collapsible=icon]:flex items-center justify-center w-10 h-10 rounded-full bg-orange-500 text-white text-lg font-bold">K</div>
         </div>
         <SidebarGroup>
           <SidebarGroupContent className="pt-4">
@@ -84,7 +88,7 @@ const AppSidebar = ({ activeTab, setActiveTab, isDarkMode, onToggleDarkMode }: {
                   >
                     <button 
                       onClick={() => setActiveTab(item.key)}
-                      className="flex items-center gap-3 px-6 py-3 w-full text-left group-data-[collapsible=icon]:px-3 group-data-[collapsible=icon]:justify-center"
+                      className="flex items-center gap-3 px-6 py-3 w-full text-left group-data-[collapsible=icon]:px-6 group-data-[collapsible=icon]:gap-3 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:mx-auto"
                     >
                       <item.icon size={20} />
                       <span className="group-data-[collapsible=icon]:hidden">{menuLabel(item.key)}</span>
@@ -101,25 +105,12 @@ const AppSidebar = ({ activeTab, setActiveTab, isDarkMode, onToggleDarkMode }: {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              tooltip={isDarkMode ? t('common.lightMode') : t('common.darkMode')}
-              className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-800 group-data-[state=collapsed]:text-gray-400 group-data-[state=collapsed]:hover:text-white group-data-[state=collapsed]:hover:bg-gray-700"
-            >
-              <button
-                onClick={onToggleDarkMode}
-                className="flex items-center gap-3 px-6 py-3 w-full text-left group-data-[collapsible=icon]:px-3 group-data-[collapsible=icon]:justify-center"
-              >
-                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-                <span className="group-data-[collapsible=icon]:hidden">{isDarkMode ? t('common.lightMode') : t('common.darkMode')}</span>
-              </button>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
               tooltip={t('common.collapse') || 'Collapse'}
               className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-800 group-data-[state=collapsed]:text-gray-400 group-data-[state=collapsed]:hover:text-white group-data-[state=collapsed]:hover:bg-gray-700"
             >
-              <SidebarTrigger className="h-10 w-full justify-start px-6 group-data-[collapsible=icon]:px-3 group-data-[collapsible=icon]:justify-center" />
+              <SidebarTrigger className="h-10 w-full justify-start px-6 group-data-[collapsible=icon]:px-3 group-data-[collapsible=icon]:justify-center">
+                {t('common.collapse') || 'Collapse'}
+              </SidebarTrigger>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -137,6 +128,15 @@ const Dashboard = () => {
   const assetDistributionRef = useRef<HTMLDivElement>(null);
   const usePlaceholders = true;
   const { t } = useLanguage();
+  const { signOut } = useAuthContext();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    const { error } = await signOut();
+    if (!error) {
+      navigate('/');
+    }
+  };
   
   // Database hooks
   const { user } = useAuthContext();
@@ -545,7 +545,24 @@ const Dashboard = () => {
       <div className="min-h-screen flex w-full bg-gray-50 dark:bg-gray-900">
         <AppSidebar activeTab={activeTab} setActiveTab={setActiveTab} isDarkMode={isDarkMode} onToggleDarkMode={toggleDarkMode} />
         <main className="flex-1 bg-gray-50 dark:bg-gray-900">
-          <div className="p-6">
+          {/* Page header */}
+          <div className="px-6 pt-6 flex items-center justify-between">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{getPageTitle()}</h1>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleDarkMode}
+                className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800"
+                title={isDarkMode ? t('common.lightMode') : t('common.darkMode')}
+              >
+                {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+                <span className="sr-only">{isDarkMode ? t('common.lightMode') : t('common.darkMode')}</span>
+              </Button>
+              <Button onClick={handleLogout} className="bg-blue-500 hover:bg-blue-600 text-white">{t('common.logOut')}</Button>
+            </div>
+          </div>
+          <div className="p-6 pt-4">
             {renderContent()}
           </div>
         </main>

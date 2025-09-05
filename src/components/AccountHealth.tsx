@@ -56,9 +56,7 @@ const AccountHealth = () => {
                     {t('health.allSyncing')}
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                    We automatically review your account on a regular basis. 
-                    If something needs your attention, you'll see those 
-                    recommendations here.
+                    {t('health.reviewInfo')}
                   </p>
                 </div>
               </div>
@@ -109,7 +107,7 @@ const AccountHealth = () => {
                     {t('health.nothing')}
                   </h2>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                    You haven't ignored any tasks, so you can ignore this tab for now.
+                    {t('health.noIgnored')}
                   </p>
                 </div>
               </div>

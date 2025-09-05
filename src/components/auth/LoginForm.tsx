@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { useAuthContext } from '@/contexts/AuthContext'
-import { Eye, EyeOff, Loader2 } from 'lucide-react'
+import { Eye, EyeOff, Loader2, BadgeCheck, Wallet, Chrome } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 interface LoginFormProps {
@@ -136,55 +136,44 @@ export function LoginForm({ onSwitchToSignup, onSuccess }: LoginFormProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          <Button variant="outline" className="w-full" onClick={() => handleProvider('BankID')} disabled={allDisabled}>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <Button variant="outline" className="w-full relative" onClick={() => handleProvider('BankID')} disabled={allDisabled}>
             {oauthLoading === 'BankID' ? (
-              <>
+              <div className="flex items-center justify-center w-full">
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                BankID
-              </>
+                <span>BankID</span>
+              </div>
             ) : (
-              'BankID'
+              <div className="w-full flex items-center justify-center">
+                <span>BankID</span>
+                <BadgeCheck className="h-4 w-4 absolute right-2" />
+              </div>
             )}
           </Button>
-          <Button variant="outline" className="w-full" onClick={() => handleProvider('Vipps')} disabled={allDisabled}>
+          <Button variant="outline" className="w-full relative" onClick={() => handleProvider('Vipps')} disabled={allDisabled}>
             {oauthLoading === 'Vipps' ? (
-              <>
+              <div className="flex items-center justify-center w-full">
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Vipps
-              </>
+                <span>Vipps</span>
+              </div>
             ) : (
-              'Vipps'
+              <div className="w-full flex items-center justify-center">
+                <span>Vipps</span>
+                <Wallet className="h-4 w-4 absolute right-2" />
+              </div>
             )}
           </Button>
-          <Button variant="outline" className="w-full" onClick={() => handleProvider('Google')} disabled={allDisabled}>
+          <Button variant="outline" className="w-full relative" onClick={() => handleProvider('Google')} disabled={allDisabled}>
             {oauthLoading === 'Google' ? (
-              <>
+              <div className="flex items-center justify-center w-full">
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Google
-              </>
+                <span>Google</span>
+              </div>
             ) : (
-              'Google'
-            )}
-          </Button>
-          <Button variant="outline" className="w-full" onClick={() => handleProvider('Meta')} disabled={allDisabled}>
-            {oauthLoading === 'Meta' ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Meta
-              </>
-            ) : (
-              'Meta'
-            )}
-          </Button>
-          <Button variant="outline" className="w-full sm:col-span-1 col-span-2" onClick={() => handleProvider('Github')} disabled={allDisabled}>
-            {oauthLoading === 'Github' ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                GitHub
-              </>
-            ) : (
-              'GitHub'
+              <div className="w-full flex items-center justify-center">
+                <span>Google</span>
+                <Chrome className="h-4 w-4 absolute right-2" />
+              </div>
             )}
           </Button>
         </div>

@@ -366,7 +366,7 @@ const Performance = () => {
                 onClick={() => setShowMoreAssets(s => !s)}
                 className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 bg-white dark:bg-gray-800"
               >
-                {showMoreAssets ? 'Hide assets' : 'More assets'}
+                {showMoreAssets ? t('performance.hideAssets') : t('performance.moreAssets')}
               </Button>
               <Button variant="outline" size="sm" className="flex items-center gap-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 bg-white dark:bg-gray-800">
                 <Calendar size={16} />

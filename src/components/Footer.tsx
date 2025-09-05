@@ -53,10 +53,10 @@ export default function Footer() {
             <div className="space-y-6 mb-8 xl:mb-0">
               {/* Simple Text Logo Placeholder */}
               <div className="flex items-center gap-3">
-                 <span className="flex items-center justify-center h-12 w-12 rounded-full bg-indigo-600 text-2xl font-bold text-white">
+                 <span className="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-2xl font-bold text-white">
                    K
                  </span>
-                 <span className="text-2xl font-bold text-gray-900 dark:text-white">Kryptools</span> {/* Use Kryptools name */}
+                 <span className="text-2xl font-bold text-black-500">Kryptools</span> {/* Use Kryptools name */}
               </div>
               <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
                 {t('footer.tagline')}

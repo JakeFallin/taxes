@@ -66,7 +66,7 @@ const TaxLossHarvesting = () => {
       <div className="flex items-center justify-between">
         <div>
           <div className="flex items-center gap-3">
-            <span className="text-gray-600 dark:text-gray-300">January 1 2025 to today</span>
+            <span className="text-gray-600 dark:text-gray-300">{t('common.dateRangeYtd')}</span>
             <span className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs font-medium px-2.5 py-0.5 rounded">{t('tlh.inProgress')}</span>
           </div>
         </div>

@@ -11,7 +11,7 @@ interface Message {
 const AiAssistant = () => {
   const { t } = useLanguage();
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'Hi! I can help with crypto investment ideas, formatting CSVs for import, and more. What do you need?' }
+    { role: 'assistant', content: t('ai.welcome') }
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)

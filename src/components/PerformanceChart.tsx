@@ -1,5 +1,5 @@
 
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Area, CartesianGrid } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Area } from 'recharts';
 import { Button } from "@/components/ui/button";
 import { useState, useMemo } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -121,7 +121,6 @@ const PerformanceChart = () => {
                 <stop offset="100%" stopColor="#f97316" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" className="dark:[&>*]:stroke-gray-700" />
             <XAxis dataKey="name" stroke="#6b7280" className="dark:[&>text]:fill-gray-300" fontSize={12} tickLine={false} axisLine={false} />
             <YAxis stroke="#6b7280" className="dark:[&>text]:fill-gray-300" fontSize={12} tickFormatter={currencyTick} domain={yDomain} allowDataOverflow tickLine={false} axisLine={false} />
             <Tooltip cursor={{ stroke: "#9ca3af", strokeDasharray: "3 3" }} content={<CustomTooltip />} />

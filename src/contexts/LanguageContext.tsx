@@ -20,10 +20,10 @@ const DICT: Dictionary = {
   'dashboard.assets': { en: 'Assets', no: 'Eiendeler' },
   'dashboard.wallets': { en: 'Wallets', no: 'Lommebøker' },
   'dashboard.transactions': { en: 'Transactions', no: 'Transaksjoner' },
-  'dashboard.portfolioValue': { en: 'Portfolio Value', no: 'Porteføljeverdi' },
+  'dashboard.portfolioValue': { en: 'Total Value', no: 'Porteføljeverdi' },
   'dashboard.portfolioPerformance': { en: 'Portfolio Performance', no: 'Porteføljeytelse' },
   'dashboard.assetDistribution': { en: 'Asset Distribution', no: 'Aktivafordeling' },
-  'dashboard.portfolioOverview': { en: 'Portfolio Overview', no: 'Porteføljeoversikt' },
+  'dashboard.portfolioOverview': { en: 'Overview', no: 'Porteføljeoversikt' },
   'dashboard.swapView': { en: 'Swap View', no: 'Bytt visning' },
   'dashboard.loadingAssets': { en: 'Loading assets...', no: 'Laster eiendeler...' },
   'dashboard.connected': { en: 'connected', no: 'tilkoblet' },
@@ -32,7 +32,7 @@ const DICT: Dictionary = {
   'dashboard.costBasis': { en: 'Cost Basis', no: 'Kostpris' },
 
   // Header
-  'header.learn': { en: 'Learn', no: 'Lær' },
+  'header.learn': { en: 'Learn', no: 'Lær mer' },
   'header.integrations': { en: 'Integrations', no: 'Integrasjoner' },
   'header.products': { en: 'Products', no: 'Produkter' },
   'header.resources': { en: 'Resources', no: 'Ressurser' },
@@ -104,6 +104,12 @@ const DICT: Dictionary = {
   'common.logOut': { en: 'Log Out', no: 'Logg ut' },
   'common.lightMode': { en: 'Light Mode', no: 'Lys modus' },
   'common.darkMode': { en: 'Dark Mode', no: 'Mørk modus' },
+  'common.collapse': { en: 'Hide', no:'Forkort' },
+  'common.dateRangeYtd': { en: 'January 1 2025 to today', no: '1. januar 2025 til i dag' },
+  'common.transactions': { en: 'transactions', no: 'transaksjoner' },
+  'common.unknown': { en: 'Unknown', no: 'Ukjent' },
+  'common.never': { en: 'Never', no: 'Aldri' },
+
 
   // Wallets
   'wallets.syncAll': { en: 'Sync All', no: 'Synk alle' },
@@ -234,6 +240,8 @@ const DICT: Dictionary = {
   'performance.expenses': { en: 'Expenses', no: 'Utgifter' },
   'performance.in': { en: 'In', no: 'Inn' },
   'performance.out': { en: 'Out', no: 'Ut' },
+  'performance.moreAssets': { en: 'More assets', no: 'Flere aktiva' },
+  'performance.hideAssets': { en: 'Hide assets', no: 'Skjul aktiva' },
 
   // Prices
   'prices.search': { en: 'Search', no: 'Søk' },
@@ -256,6 +264,7 @@ const DICT: Dictionary = {
   'ai.send': { en: 'Send', no: 'Send' },
   'ai.assistant': { en: 'Assistant', no: 'Assistent' },
   'ai.you': { en: 'You', no: 'Du' },
+  'ai.welcome': { en: 'Hi! I can help with crypto investment ideas, formatting CSVs for import, and more. What do you need?', no: 'Hei! Jeg kan hjelpe med krypto-investeringsideer, formatering av CSV for import og mer. Hva trenger du?' },
 
   // Assets table
   'assets.title': { en: 'Your Assets', no: 'Dine eiendeler' },
