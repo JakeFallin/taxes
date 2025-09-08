@@ -1,6 +1,6 @@
 
 import { Sidebar, SidebarContent, SidebarProvider, SidebarTrigger, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarFooter } from "@/components/ui/sidebar";
-import { Home, Wallet, PieChart, Receipt, TrendingUp, TrendingDown, BarChart3, DollarSign, Settings as SettingsIcon, Heart, Ban, FileText, Sun, Moon, RotateCcw, Bot } from "lucide-react";
+import { Home, Wallet, PieChart, Receipt, TrendingUp, TrendingDown, BarChart3, DollarSign, Settings as SettingsIcon, Heart, Trash2, FileText, Sun, Moon, RotateCcw, Bot, User, LifeBuoy, LogOut } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useWallets } from "@/hooks/useWallets";
@@ -28,12 +28,13 @@ import { useNavigate } from "react-router-dom";
 import EnhancedAssetDistributionChart from "./EnhancedAssetDistributionChart";
 import CompactPerformanceChart from "./CompactPerformanceChart";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const menuItems = [
   { title: "Portfolio", icon: PieChart, url: "/portfolio", key: "portfolio" },
   { title: "Wallets", icon: Wallet, url: "/wallets", key: "wallets" },
   { title: "Transactions", icon: Receipt, url: "/transactions", key: "transactions" },
-  { title: "Spam", icon: Ban, url: "/spam", key: "spam" },
+  { title: "Spam", icon: Trash2, url: "/spam", key: "spam" },
   { title: "Taxes", icon: FileText, url: "/taxes", key: "taxes" },
   { title: "Account Health", icon: Heart, url: "/health", key: "health" },
   { title: "Tax Loss Harvesting", icon: TrendingDown, url: "/tax-loss-harvesting", key: "tax-loss-harvesting" },
@@ -56,6 +57,7 @@ const AppSidebar = ({ activeTab, setActiveTab, isDarkMode, onToggleDarkMode }: {
       case 'tax-loss-harvesting': return t('menu.taxLossHarvesting');
       case 'performance': return t('menu.performance');
       case 'prices': return t('menu.prices');
+      case 'ai': return 'AI';
       case 'settings': return t('menu.settings');
       default: return key;
     }
@@ -70,7 +72,7 @@ const AppSidebar = ({ activeTab, setActiveTab, isDarkMode, onToggleDarkMode }: {
       <SidebarContent>
         <div className="p-6 h-20 flex items-center gap-4 group-data-[collapsible=icon]:justify-center group-data-[state=collapsed]:border-none">
           {/* Full logo text when expanded */}
-          <h2 className="text-5xl leading-none font-bold text-gray-900 dark:text-white group-data-[collapsible=icon]:hidden">Kryptools</h2>
+          <h2 className="text-4xl leading-none font-bold text-gray-900 dark:text-white group-data-[collapsible=icon]:hidden">Kryptools</h2>
           {/* Compact logo when collapsed */}
           <div className="hidden group-data-[collapsible=icon]:flex items-center justify-center w-10 h-10 rounded-full bg-orange-500 text-white text-lg font-bold">K</div>
         </div>
@@ -108,7 +110,7 @@ const AppSidebar = ({ activeTab, setActiveTab, isDarkMode, onToggleDarkMode }: {
               tooltip={t('common.collapse') || 'Collapse'}
               className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-800 group-data-[state=collapsed]:text-gray-400 group-data-[state=collapsed]:hover:text-white group-data-[state=collapsed]:hover:bg-gray-700"
             >
-              <SidebarTrigger className="h-10 w-full justify-start px-6 group-data-[collapsible=icon]:px-3 group-data-[collapsible=icon]:justify-center">
+              <SidebarTrigger className="h-10 w-full justify-start px-6 group-data-[collapsible=icon]:w-auto group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:mx-auto">
                 {t('common.collapse') || 'Collapse'}
               </SidebarTrigger>
             </SidebarMenuButton>
@@ -136,6 +138,15 @@ const Dashboard = () => {
     if (!error) {
       navigate('/');
     }
+  };
+  const handleProfile = () => {
+    navigate('/dashboard');
+  };
+  const handleSettings = () => {
+    setActiveTab('settings');
+  };
+  const handleHelp = () => {
+    navigate('/');
   };
   
   // Database hooks
@@ -559,7 +570,38 @@ const Dashboard = () => {
                 {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
                 <span className="sr-only">{isDarkMode ? t('common.lightMode') : t('common.darkMode')}</span>
               </Button>
-              <Button onClick={handleLogout} className="bg-blue-500 hover:bg-blue-600 text-white">{t('common.logOut')}</Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-800 rounded-full h-9 w-9 p-0"
+                    title="User menu"
+                  >
+                    <User size={18} />
+                    <span className="sr-only">Open user menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuItem onClick={handleProfile} className="flex items-center gap-2">
+                    <User size={14} />
+                    <span>My profile</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleSettings} className="flex items-center gap-2">
+                    <SettingsIcon size={14} />
+                    <span>Settings and billing</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleHelp} className="flex items-center gap-2">
+                    <LifeBuoy size={14} />
+                    <span>Help</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout} className="flex items-center gap-2 text-red-600 focus:text-red-600">
+                    <LogOut size={14} />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
           <div className="p-6 pt-4">
