@@ -37,7 +37,7 @@ const menuItems = [
   { title: "Spam", icon: Trash2, url: "/spam", key: "spam" },
   { title: "Taxes", icon: FileText, url: "/taxes", key: "taxes" },
   { title: "Account Health", icon: Heart, url: "/health", key: "health" },
-  { title: "Tax Loss Harvesting", icon: TrendingDown, url: "/tax-loss-harvesting", key: "tax-loss-harvesting" },
+  { title: "Tax Loss Harvesting", icon: TrendingUp, url: "/tax-loss-harvesting", key: "tax-loss-harvesting" },
   { title: "Performance", icon: BarChart3, url: "/performance", key: "performance" },
   { title: "Prices", icon: DollarSign, url: "/prices", key: "prices" },
   { title: "AI Assistant", icon: Bot, url: "/ai", key: "ai" },
@@ -288,16 +288,13 @@ const Dashboard = () => {
 
   const timePeriods = ['1M', '3M', '1Y', 'ALL'];
 
-  // Mock fallback distribution for compact asset list
-  const mockSmallDistribution = [
-    { asset: 'BTC', percent: 45 },
-    { asset: 'ETH', percent: 35 },
-    { asset: 'ADA', percent: 8 },
-    { asset: 'SOL', percent: 5 },
-    { asset: 'MATIC', percent: 3 },
-    { asset: 'LINK', percent: 2 },
-    { asset: 'LTC', percent: 1.5 },
-    { asset: 'Others', percent: 0.5 }
+  // Legend colors aligned with AssetDistributionChart.tsx
+  const staticLegend = [
+    { label: 'Bitcoin (BTC)', color: '#f7931a' },
+    { label: 'Ethereum (ETH)', color: '#627eea' },
+    { label: 'Cardano (ADA)', color: '#0033ad' },
+    { label: 'Solana (SOL)', color: '#9945ff' },
+    { label: 'Others', color: '#6b7280' },
   ];
 
   const renderContent = () => {
@@ -412,24 +409,7 @@ const Dashboard = () => {
                             {usePlaceholders ? 'NOK 3,341,345,823.965' : 'NOK 0.00'}
                           </p>
                         </div>
-                        <div className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3">
-                          <p className="text-sm text-black dark:text-gray-400 mb-1 font-medium">{t('dashboard.assets')}</p>
-                          <p className="text-lg font-semibold text-black dark:text-white">
-                            {usePlaceholders ? `14 ${t('dashboard.assets')}` : `${getAssetCount()} ${t('dashboard.assets')}`}
-                          </p>
-                        </div>
-                        <div className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3">
-                          <p className="text-sm text-black dark:text-gray-400 mb-1 font-medium">{t('dashboard.wallets')}</p>
-                          <p className="text-lg font-semibold text-black dark:text-white">
-                            {usePlaceholders ? `8 ${t('dashboard.connected')}` : `${wallets.length} ${t('dashboard.connected')}`}
-                          </p>
-                        </div>
-                        <div className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3">
-                          <p className="text-sm text-black dark:text-gray-400 mb-1 font-medium">{t('dashboard.transactions')}</p>
-                          <p className="text-lg font-semibold text-black dark:text-white">
-                            {usePlaceholders ? `3179 ${t('dashboard.total')}` : `${wallets.reduce((total, wallet) => total + (wallet.total_transactions || 0), 0)} ${t('dashboard.total')}`}
-                          </p>
-                        </div>
+                        
                       </>
                     )}
                   </div>
@@ -452,23 +432,23 @@ const Dashboard = () => {
                         </Button>
                       </div>
                       
-                      <div className="flex items-center justify-between gap-6 p-4 pt-2 flex-1">
+                      <div className="flex items-center justify-center gap-10 p-4 pt-2 flex-1">
                         {/* Asset list on the left */}
                         <ScrollArea className="flex-1 h-full">
                           <div className="pr-1">
                             {transactionsLoading ? (
                               <div className="text-sm text-gray-500">Loading assets...</div>
                             ) : Object.keys(portfolioSummary).length === 0 ? (
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-1 gap-x-4 text-[11px] leading-tight text-gray-600 dark:text-gray-300">
-                                {mockSmallDistribution.map((row) => (
-                                  <div key={row.asset} className="flex items-center gap-2">
-                                    <span>{row.asset}</span>
-                                    <span className="font-medium">{row.percent}%</span>
+                              <div className="grid grid-cols-1 gap-y-2 text-[12px] leading-tight text-gray-700 dark:text-gray-300">
+                                {staticLegend.map((item) => (
+                                  <div key={item.label} className="flex items-center gap-3">
+                                    <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} />
+                                    <span>{item.label}</span>
                                   </div>
                                 ))}
                               </div>
                             ) : (
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
+                              <div className="grid grid-cols-1 gap-y-2">
                                 {Object.entries(portfolioSummary).map(([asset, data]) => (
                                   <div key={asset} className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
@@ -489,7 +469,7 @@ const Dashboard = () => {
                         </ScrollArea>
                         
                         {/* Smaller pie chart on the right */}
-                        <div className="w-32 h-32 flex items-center justify-center flex-shrink-0">
+                        <div className="w-36 h-36 md:w-40 md:h-40 flex items-center justify-center flex-shrink-0">
                           <AssetDistributionChart />
                         </div>
                       </div>

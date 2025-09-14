@@ -1,4 +1,4 @@
-import { RotateCw, Plus, Search, ChevronDown, Wallet as WalletIcon, Edit, Trash2, ExternalLink, Receipt, Layers, MoreHorizontal } from "lucide-react";
+import { RotateCw, Search, ChevronDown, Wallet as WalletIcon, Edit, Trash2, ExternalLink, Receipt, Layers, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -13,6 +13,7 @@ import { AssetDetailsModal } from "./AssetDetailsModal";
 
 import { Wallet } from "@/hooks/useWallets";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 // Convert crypto value to NOK (Norwegian Krone)
 const convertToNOK = (cryptoValue: number, blockchain: string) => {
@@ -65,7 +66,7 @@ const Wallets = () => {
   const otherTransactions = [
     {
       id: "other",
-      name: "Other transactions",
+      name: t('wallets.otherTransactions'),
       assets: 0,
       value: "NOK 0.00",
       lastSync: null,
@@ -122,20 +123,24 @@ const Wallets = () => {
             <RotateCw size={16} />
             {t('wallets.syncAll')}
           </Button>
-          <Button 
-            className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white"
-            onClick={() => setShowAddWallet(true)}
-          >
-            <Plus size={16} />
-            {t('wallets.addWallet')}
-          </Button>
-          <Button
-            variant="outline"
-            className="flex items-center gap-2"
-            onClick={() => setShowImportCsv(true)}
-          >
-            {t('wallets.importCsv')}
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button 
+                className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white"
+              >
+                Import
+                <ChevronDown size={16} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-40">
+              <DropdownMenuItem onClick={() => setShowImportCsv(true)}>
+                CSV
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setShowAddWallet(true)}>
+                API
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <div className="flex items-center gap-2">
           <button

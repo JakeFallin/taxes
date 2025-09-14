@@ -136,43 +136,91 @@ export function LoginForm({ onSwitchToSignup, onSuccess }: LoginFormProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          <Button variant="outline" className="w-full relative" onClick={() => handleProvider('BankID')} disabled={allDisabled}>
+        <div className="flex flex-col gap-3">
+          {/* BankID pill */}
+          <Button 
+            className="w-full h-14 rounded-full bg-[#2E0A46] hover:bg-[#3a1662] text-white text-base font-medium justify-center"
+            onClick={() => handleProvider('BankID')} 
+            disabled={allDisabled}
+          >
             {oauthLoading === 'BankID' ? (
               <div className="flex items-center justify-center w-full">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                <span>BankID</span>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                <span>Logg inn med BankID</span>
               </div>
             ) : (
-              <div className="w-full flex items-center justify-center">
-                <span>BankID</span>
-                <BadgeCheck className="h-4 w-4 absolute right-2" />
+              <div className="w-full flex items-center justify-center gap-3">
+                <svg
+                  width="30"
+                  height="20"
+                  viewBox="0 0 30 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  className="text-white"
+                >
+                  <rect x="2" y="2" width="9" height="4" rx="2" fill="currentColor" />
+                  <rect x="19" y="2" width="9" height="4" rx="2" fill="currentColor" />
+                  <rect x="2" y="8" width="9" height="4" rx="2" fill="currentColor" />
+                  <rect x="13.5" y="8" width="9" height="4" rx="2" fill="currentColor" />
+                  <rect x="2" y="14" width="9" height="4" rx="2" fill="currentColor" />
+                  <rect x="19" y="14" width="9" height="4" rx="2" fill="currentColor" />
+                </svg>
+                <span>Logg inn med BankID</span>
               </div>
             )}
           </Button>
-          <Button variant="outline" className="w-full relative" onClick={() => handleProvider('Vipps')} disabled={allDisabled}>
+
+          {/* Vipps pill */}
+          <Button 
+            className="w-full h-14 rounded-full bg-[#FF5B24] hover:bg-[#ff6a39] text-white text-base font-medium justify-center"
+            onClick={() => handleProvider('Vipps')} 
+            disabled={allDisabled}
+          >
             {oauthLoading === 'Vipps' ? (
               <div className="flex items-center justify-center w-full">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                <span>Vipps</span>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                <span>Log in with vipps</span>
               </div>
             ) : (
               <div className="w-full flex items-center justify-center">
-                <span>Vipps</span>
-                <Wallet className="h-4 w-4 absolute right-2" />
+                <span className="sr-only">Log in with Vipps</span>
+                <span className="flex items-center gap-2" aria-hidden="true">
+                  <span>Log in with</span>
+                  <span className="flex items-center">
+                    <span className="lowercase font-semibold">v</span>
+                    <svg className="mx-1" width="22" height="12" viewBox="0 0 22 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="3" cy="3" r="2" fill="currentColor" />
+                      <path d="M1 9 C 6 13, 16 13, 21 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none"/>
+                    </svg>
+                    <span className="lowercase font-semibold">pps</span>
+                  </span>
+                </span>
               </div>
             )}
           </Button>
-          <Button variant="outline" className="w-full relative" onClick={() => handleProvider('Google')} disabled={allDisabled}>
+
+          {/* Google button - styled close to Google's guidelines */}
+          <Button 
+            className="w-full h-14 rounded-md border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium shadow-sm justify-center"
+            onClick={() => handleProvider('Google')} 
+            disabled={allDisabled}
+          >
             {oauthLoading === 'Google' ? (
               <div className="flex items-center justify-center w-full">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                <span>Google</span>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                <span>Sign in with Google</span>
               </div>
             ) : (
-              <div className="w-full flex items-center justify-center">
-                <span>Google</span>
-                <Chrome className="h-4 w-4 absolute right-2" />
+              <div className="w-full flex items-center justify-center gap-3">
+                <span className="inline-flex items-center justify-center w-6 h-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
+                    <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20c11.045 0 20-8.955 20-20 0-1.341-.138-2.651-.389-3.917z"/>
+                    <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.285 16.108 18.771 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+                    <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.197l-6.191-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.62-3.317-11.283-7.955l-6.5 5.02C9.518 39.556 16.227 44 24 44z"/>
+                    <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.261 4.166-3.994 5.565l.003-.002 6.191 5.238C35.258 41.803 40 38 42.871 32.871 44.211 30.279 45 27.24 45 24c0-1.341-.138-2.651-.389-3.917z"/>
+                  </svg>
+                </span>
+                <span>Sign in with Google</span>
               </div>
             )}
           </Button>

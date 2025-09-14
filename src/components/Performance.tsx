@@ -268,63 +268,66 @@ const Performance = () => {
 
   return (
     <div className="space-y-8">
-      {/* Top metrics: Income, Expenses, In, Out */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <PerformanceCard
-          title={t('performance.income')}
-          value="NOK 124,950"
-          percentage="+4.2% MoM"
-          isPositive={true}
-        />
-        <PerformanceCard
-          title={t('performance.expenses')}
-          value="NOK 18,420"
-          percentage="-1.1% MoM"
-          isPositive={false}
-        />
-        <PerformanceCard
-          title={t('performance.in')}
-          value="NOK 2,850,000"
-          percentage="+120k last 30d"
-          isPositive={true}
-        />
-        <PerformanceCard
-          title={t('performance.out')}
-          value="NOK 2,320,000"
-          percentage="+80k last 30d"
-          isPositive={true}
-        />
-      </div>
-      {/* Performance Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <PerformanceCard
-          title={t('performance.totalReturn')}
-          value="NOK 1,514.74"
-          percentage="+13.10%"
-          isPositive={true}
-        />
-        <PerformanceCard
-          title={t('performance.unrealized')}
-          value="NOK 1,245.32"
-          percentage="+10.85%"
-          isPositive={true}
-        />
-        <PerformanceCard
-          title={t('performance.realized')}
-          value="NOK 269.42"
-          percentage="+2.25%"
-          isPositive={true}
-        />
-        <PerformanceCard
-          title={t('performance.bestPerformer')}
-          value="Bitcoin"
-          percentage="+28.5%"
-          isPositive={true}
-        />
+      {/* KPI grids grouped for tighter inter-row spacing */}
+      <div className="space-y-3 md:space-y-4">
+        {/* Top metrics: Income, Expenses, In, Out */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <PerformanceCard
+            title={t('performance.income')}
+            value="NOK 124,950"
+            percentage="+4.2% MoM"
+            isPositive={true}
+          />
+          <PerformanceCard
+            title={t('performance.expenses')}
+            value="NOK 18,420"
+            percentage="-1.1% MoM"
+            isPositive={false}
+          />
+          <PerformanceCard
+            title={t('performance.in')}
+            value="NOK 2,850,000"
+            percentage="+120k last 30d"
+            isPositive={true}
+          />
+          <PerformanceCard
+            title={t('performance.out')}
+            value="NOK 2,320,000"
+            percentage="+80k last 30d"
+            isPositive={true}
+          />
+        </div>
+        {/* Performance Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <PerformanceCard
+            title={t('performance.totalReturn')}
+            value="NOK 1,514.74"
+            percentage="+13.10%"
+            isPositive={true}
+          />
+          <PerformanceCard
+            title={t('performance.unrealized')}
+            value="NOK 1,245.32"
+            percentage="+10.85%"
+            isPositive={true}
+          />
+          <PerformanceCard
+            title={t('performance.realized')}
+            value="NOK 269.42"
+            percentage="+2.25%"
+            isPositive={true}
+          />
+          <PerformanceCard
+            title={t('performance.bestPerformer')}
+            value="Bitcoin"
+            percentage="+28.5%"
+            isPositive={true}
+          />
+        </div>
       </div>
 
       {/* Portfolio vs. Benchmark Chart */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
+      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm mt-4">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('performance.pvb')}</h2>
           <div className="flex flex-col gap-3 items-end">

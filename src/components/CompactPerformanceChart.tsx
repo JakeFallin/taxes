@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Area, CartesianGrid } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Area } from 'recharts';
 
 // Supported time ranges (prop comes from parent)
 const timePeriods = ['24H', '1W', '1M', '1Y', 'ALL'] as const;
@@ -83,7 +83,6 @@ const CompactPerformanceChart = ({ selectedPeriod }: { selectedPeriod?: string }
                 <stop offset="100%" stopColor="#f97316" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" className="dark:[&>*]:stroke-gray-700" />
             <XAxis 
               dataKey="name" 
               stroke="#6b7280" 
