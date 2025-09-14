@@ -74,9 +74,9 @@ const CompactPerformanceChart = ({ selectedPeriod }: { selectedPeriod?: string }
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex-1 min-h-0 pt-2">
+      <div className="flex-1 min-h-0">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
+          <LineChart data={data} margin={{ top: 20, right: 20, bottom: 70, left: -20 }}>
             <defs>
               <linearGradient id="portfolioFillCompact" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#f97316" stopOpacity={0.35} />
@@ -87,25 +87,25 @@ const CompactPerformanceChart = ({ selectedPeriod }: { selectedPeriod?: string }
               dataKey="name" 
               stroke="#6b7280" 
               className="dark:[&>text]:fill-gray-300" 
-              fontSize={10}
-              tick={{ fontSize: 10 }}
+              fontSize={9}
+              tick={{ fontSize: 9 }}
               tickLine={false}
               axisLine={false}
             />
             <YAxis 
               stroke="#6b7280" 
               className="dark:[&>text]:fill-gray-300" 
-              fontSize={10}
+              fontSize={9}
               tickFormatter={currencyTick}
               domain={yDomain}
               allowDataOverflow
-              tick={{ fontSize: 10 }}
+              tick={{ fontSize: 9 }}
               tickLine={false}
               axisLine={false}
             />
             <Tooltip cursor={{ stroke: "#9ca3af", strokeDasharray: "3 3" }} content={<CustomTooltip />} />
-            <Area type="linear" dataKey="portfolio" stroke="#f97316" strokeWidth={2} fillOpacity={1} fill="url(#portfolioFillCompact)" dot={false} />
-            <Line type="linear" dataKey="portfolio" stroke="#f97316" strokeWidth={2} dot={false} />
+            <Area type="linear" dataKey="portfolio" stroke="#f97316" strokeWidth={1.5} fillOpacity={1} fill="url(#portfolioFillCompact)" dot={false} />
+            <Line type="linear" dataKey="portfolio" stroke="#f97316" strokeWidth={1.5} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </div>

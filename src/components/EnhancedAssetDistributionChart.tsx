@@ -55,15 +55,15 @@ interface EnhancedAssetDistributionChartProps {
 const EnhancedAssetDistributionChart = ({ isSwapped = false }: EnhancedAssetDistributionChartProps) => {
   return (
     <div className={`h-full flex flex-col ${isSwapped ? 'pie-chart' : ''}`}>
-      <div className="flex-1 pb-5" style={{ height: isSwapped ? 'calc(100% - 20px)' : '90%' }}>
+      <div className="flex-1 h-full min-h-0">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               data={data}
               cx="50%"
               cy="50%"
-              innerRadius={isSwapped ? 110 : 80}
-              outerRadius={isSwapped ? 180 : 150}
+              innerRadius={isSwapped ? 110 : 100}
+              outerRadius={isSwapped ? 180 : 170}
               paddingAngle={2}
               dataKey="value"
               startAngle={90}

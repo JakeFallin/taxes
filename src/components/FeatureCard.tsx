@@ -1,6 +1,6 @@
 
 
-import { Activity, FileText, Shield, Lock, TrendingUp, PieChart } from "lucide-react";
+import { Activity, FileText, Shield, Lock, TrendingUp, PieChart, BarChart3 } from "lucide-react";
 
 interface FeatureCardProps {
   icon: string;
@@ -10,17 +10,18 @@ interface FeatureCardProps {
 }
 
 const iconMap = {
-  "📊": TrendingUp,
+  // Map to icons that match the screenshot: document, pie/clock, bars, shield/lock
   "📋": FileText,
+  "📊": BarChart3,
   "📈": PieChart,
-  "🔒": Lock,
+  "🔒": Shield,
 };
 
 const FeatureCard = ({ icon, title, description, iconBg }: FeatureCardProps) => {
   const IconComponent = iconMap[icon as keyof typeof iconMap] || Activity;
   
   return (
-    <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+    <a href="#" className="block bg-white rounded-2xl p-8 shadow-sm border border-gray-100 transition-transform hover:scale-[1.02] focus:scale-[1.02] focus:outline-none">
       <div className="flex items-start space-x-6">
         <div className={`w-16 h-16 rounded-2xl ${iconBg} flex items-center justify-center flex-shrink-0`}>
           <IconComponent className="text-white" size={28} />
@@ -30,7 +31,7 @@ const FeatureCard = ({ icon, title, description, iconBg }: FeatureCardProps) => 
           <p className="text-gray-600 leading-relaxed text-base">{description}</p>
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 

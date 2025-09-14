@@ -70,11 +70,11 @@ const AppSidebar = ({ activeTab, setActiveTab, isDarkMode, onToggleDarkMode }: {
       collapsible="icon"
     >
       <SidebarContent>
-        <div className="p-6 h-20 flex items-center gap-4 group-data-[collapsible=icon]:justify-center group-data-[state=collapsed]:border-none">
-          {/* Full logo text when expanded */}
-          <h2 className="text-4xl leading-none font-bold text-gray-900 dark:text-white group-data-[collapsible=icon]:hidden">Kryptools</h2>
-          {/* Compact logo when collapsed */}
-          <div className="hidden group-data-[collapsible=icon]:flex items-center justify-center w-10 h-10 rounded-full bg-orange-500 text-white text-lg font-bold">K</div>
+        <div className="p-5 h-16 flex items-center gap-1 group-data-[collapsible=icon]:justify-center group-data-[state=collapsed]:border-none">
+          <div className="flex items-center gap-1">
+            <div className="flex items-center justify-center w-9 h-9 rounded-full bg-orange-500 text-white text-base font-bold">K</div>
+            <h2 className="leading-none font-bold text-gray-900 dark:text-white text-2xl group-data-[collapsible=icon]:hidden">ryptools</h2>
+          </div>
         </div>
         <SidebarGroup>
           <SidebarGroupContent className="pt-4">
@@ -263,22 +263,7 @@ const Dashboard = () => {
     }
   };
 
-  // Effect to handle height matching when view is swapped
-  useEffect(() => {
-    if (isViewSwapped && portfolioOverviewRef.current && assetDistributionRef.current) {
-      const portfolioHeight = portfolioOverviewRef.current.offsetHeight;
-      assetDistributionRef.current.style.height = `${portfolioHeight}px`;
-      
-      // Debug logging
-      console.log(
-        `Graph height: ${portfolioHeight}px\n`,
-        `Asset box height: ${assetDistributionRef.current.offsetHeight}px`
-      );
-    } else if (!isViewSwapped && assetDistributionRef.current) {
-      // Reset to original height
-      assetDistributionRef.current.style.height = '';
-    }
-  }, [isViewSwapped]);
+  // Fixed height containers now ensure consistent size when swapping views
 
   // Debug effect to log when wallets change
   useEffect(() => {
@@ -330,8 +315,8 @@ const Dashboard = () => {
               {/* Left Section - Performance Chart or Asset Distribution */}
               <div className="lg:col-span-2 pr-6 flex flex-col">
                 {!isViewSwapped ? (
-                  <div ref={portfolioOverviewRef} className="portfolio-overview bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm flex-1 flex flex-col">
-                    <div className="p-4 pb-2 flex items-center justify-between">
+                  <div ref={portfolioOverviewRef} className="portfolio-overview bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm flex-1 flex flex-col h-[680px] min-h-[680px] max-h-[680px] overflow-hidden">
+                    <div className="p-6 pb-4 flex items-center justify-between">
                       <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('dashboard.portfolioOverview')}</h2>
                       <Button
                         variant="outline"
@@ -343,14 +328,14 @@ const Dashboard = () => {
                         {t('dashboard.swapView')}
                       </Button>
                     </div>
-                    <div className="flex-1 p-4 pt-2 min-h-[220px] sm:min-h-[280px] md:min-h-[360px]">
+                    <div className="flex-1 p-6 pt-2 h-full">
                       <PerformanceChart />
                     </div>
                   </div>
                 ) : (
                   <div 
                     ref={assetDistributionRef}
-                    className="asset-distribution bg-white dark:bg-gray-800 rounded-xl shadow-sm asset-distribution-container flex-1 flex flex-col"
+                    className="asset-distribution bg-white dark:bg-gray-800 rounded-xl shadow-sm asset-distribution-container flex-1 flex flex-col h-[680px] min-h-[680px] max-h-[680px] overflow-hidden"
                   >
                     <div className="p-6 pb-4 flex items-center justify-between">
                       <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{t('dashboard.assetDistribution')}</h2>
@@ -364,7 +349,7 @@ const Dashboard = () => {
                         {t('dashboard.swapView')}
                       </Button>
                     </div>
-                    <div className="p-6 pt-2 flex-1 pie-chart-wrapper h-[220px] sm:h-[280px] md:h-[360px]">
+                    <div className="p-6 pt-2 flex-1 pie-chart-wrapper h-full">
                       <EnhancedAssetDistributionChart isSwapped={isViewSwapped} />
                     </div>
                   </div>
@@ -372,7 +357,7 @@ const Dashboard = () => {
               </div>
               
               {/* Right sidebar - takes 1 column, flush to the right */}
-              <div className="space-y-4 flex flex-col">
+              <div className="space-y-4 flex flex-col h-[680px] min-h-[680px]">
                 {/* Portfolio Value - expanded to include all value-related metrics */}
                 <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 shadow-sm">
                   <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">{t('dashboard.portfolioValue')}</h2>
@@ -416,7 +401,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Asset Distribution Chart or Performance Chart - adjusted to fill remaining height */}
-                <div className={`bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm flex-1 flex flex-col ${isViewSwapped ? 'h-[420px]' : ''}`}>
+                <div className={`bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm flex-1 min-h-0 flex flex-col`}>
                   {!isViewSwapped ? (
                     <>
                       <div className="p-4 pb-2 flex items-center justify-between">
@@ -507,7 +492,7 @@ const Dashboard = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="p-4 pt-2 flex-1 relative h-[220px] sm:h-[280px] md:h-[360px]">
+                      <div className="p-4 pt-2 flex-1 relative h-[360px]">
                         <CompactPerformanceChart selectedPeriod={selectedPeriod} />
                       </div>
                       </div>
@@ -538,7 +523,7 @@ const Dashboard = () => {
         <main className="flex-1 bg-gray-50 dark:bg-gray-900">
           {/* Page header */}
           <div className="px-6 pt-6 flex items-center justify-between">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{getPageTitle()}</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{getPageTitle()}</h1>
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"

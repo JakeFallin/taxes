@@ -3,13 +3,26 @@ import Header from "@/components/Header";
 import FeatureCard from "@/components/FeatureCard";
 import FAQ from "@/components/FAQ";
 import { Button } from "@/components/ui/button";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, MessageCircle, Send } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useState } from "react";
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
+  const [chatOpen, setChatOpen] = useState(false);
+  const [chatInput, setChatInput] = useState("");
+  const [chatMessages, setChatMessages] = useState<Array<{ from: 'user' | 'bot'; text: string }>>([
+    { from: 'bot', text: 'Hei! Hvordan kan vi hjelpe deg i dag? ' }
+  ]);
+
+  const sendChat = () => {
+    const text = chatInput.trim();
+    if (!text) return;
+    setChatMessages(prev => [...prev, { from: 'user', text }, { from: 'bot', text: 'Takk! Dette er et eksempel-svar. Vi kontakter deg snart.' }]);
+    setChatInput("");
+  };
   
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-orange-50 via-sky-50 to-white dark:from-purple-950 dark:via-gray-900 dark:to-gray-900">
@@ -50,7 +63,7 @@ const LandingPage = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-6 sm:space-y-0 sm:space-x-6">
             <Button 
               size="lg" 
-              className="bg-blue-500 hover:bg-blue-600 text-white px-16 py-5 text-2xl font-semibold"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-16 py-5 text-2xl font-semibold transition-transform duration-150 hover:scale-[1.03] active:scale-100"
               onClick={() => navigate('/auth')}
             >
               {t('landing.hero.ctaFree')}
@@ -78,29 +91,35 @@ const LandingPage = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
             <FeatureCard
               icon="📋"
               title={t('landing.feature.tax.title')}
               description={t('landing.feature.tax.desc')}
               iconBg="bg-orange-500"
             />
-            
+            </div>
+
+
+            <div className="animate-fade-in" style={{ animationDelay: '0.1s' }}>
+
             <FeatureCard
               icon="📈"  
               title={t('landing.feature.tracking.title')}
               description={t('landing.feature.tracking.desc')}
               iconBg="bg-orange-500"
             />
+            </div>
             
             <FeatureCard
-              icon="🔄"            
+              icon="📊"            
               title={t('landing.feature.overview.title')}
               description={t('landing.feature.overview.desc')}
               iconBg="bg-orange-500"
             />
             
             <FeatureCard
-              icon="📈"
+              icon="🔒"
               title={t('landing.feature.secure.title')}
               description={t('landing.feature.secure.desc')}
               iconBg="bg-orange-500"
@@ -127,7 +146,7 @@ const LandingPage = () => {
           <div className="mt-4">
             <Button 
               size="lg" 
-              className="bg-blue-500 hover:bg-blue-600 text-white px-16 py-5 text-2xl font-semibold"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-16 py-5 text-2xl font-semibold transition-transform duration-150 hover:scale-[1.03] active:scale-100"
               onClick={() => navigate('/auth')}
             >
               {t('landing.hero.ctaFree')}
@@ -137,6 +156,42 @@ const LandingPage = () => {
       </section>
 
     
+      {/* Floating support chat (landing page only) */}
+      <button
+        onClick={() => setChatOpen(v => !v)}
+        className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-orange-500 hover:bg-orange-600 text-white shadow-lg flex items-center justify-center"
+        aria-label="Open support chat"
+      >
+        <MessageCircle size={24} />
+      </button>
+
+      {chatOpen && (
+        <div className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl overflow-hidden">
+          <div className="px-4 py-3 bg-orange-500 text-white flex items-center justify-between">
+            <span className="font-semibold">Support</span>
+            <button onClick={() => setChatOpen(false)} className="text-white/90 hover:text-white text-sm">Lukk</button>
+          </div>
+          <div className="max-h-64 overflow-y-auto p-3 space-y-2">
+            {chatMessages.map((m, i) => (
+              <div key={i} className={`flex ${m.from === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`${m.from === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100'} rounded-lg px-3 py-2 text-sm max-w-[80%]`}> {m.text} </div>
+              </div>
+            ))}
+          </div>
+          <div className="p-3 border-t border-gray-200 dark:border-gray-700 flex items-center gap-2">
+            <input
+              value={chatInput}
+              onChange={e => setChatInput(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter') sendChat(); }}
+              className="flex-1 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-3 py-2 text-sm focus:outline-none"
+              placeholder="Skriv en melding..."
+            />
+            <Button size="sm" className="bg-orange-500 hover:bg-orange-600 text-white" onClick={sendChat}>
+              <Send size={14} />
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

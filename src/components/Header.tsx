@@ -42,9 +42,9 @@ const Header = () => {
       <div className="container mx-auto px-4 py-5">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center py-3 gap-3">
+          <Link to="/" className="flex items-center py-3 gap-1">
             <span className="flex items-center justify-center h-10 w-10 rounded-full bg-orange-500 text-white text-lg font-bold">K</span>
-            <span className="font-bold text-gray-900 text-3xl leading-none">Kryptools</span>
+            <span className="font-bold text-gray-900 text-3xl leading-none">ryptools</span>
           </Link>
 
           {/* Navigation Menu */}
