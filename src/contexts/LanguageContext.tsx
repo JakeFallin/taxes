@@ -417,7 +417,7 @@ const DICT: Dictionary = {
   'settings.sub.feature.prioritySupport': { en: 'Priority support', no: 'Prioritert support' },
   'settings.sub.feature.performance': { en: 'Performance tracking', no: 'Ytelsessporing' },                   
   'settings.sub.feature.changeCostBasis': { en: 'Change cost basis method by year', no: 'Endre kostpris-metode per år' },
-  'settings.sub.feature.full.accountManager': { en: 'A dedicated account manager that works with you to manage your CoinTracker account.', no: 'En dedikert kundekontakt som hjelper deg å administrere CoinTracker-kontoen din.' },
+  'settings.sub.feature.full.accountManager': { en: 'A dedicated account manager that works with you to manage your Kryptools account.', no: 'En dedikert kundekontakt som hjelper deg å administrere Kryptools din.' },
   'settings.sub.feature.full.csvHelp': { en: 'Personal assistance in managing and importing CSV files.', no: 'Personlig hjelp med håndtering og import av CSV-filer.' },
   'settings.sub.feature.full.expertTeam': { en: 'A dedicated team of experts ready to work with you to review transactions, identify and fix errors, and reconcile your accounts.', no: 'Et dedikert ekspertteam som hjelper deg å gjennomgå transaksjoner, identifisere og rette feil og avstemme kontoer.' },
   'settings.sub.feature.full.quarterlyHealth': { en: "Quarterly account health reviews so you're ready and confident well before tax deadlines.", no: 'Kvartalsvise helsesjekker av konto, slik at du er klar og trygg i god tid før skattemyfristene.' },
