@@ -14,6 +14,7 @@ import { AssetDetailsModal } from "./AssetDetailsModal";
 import { Wallet } from "@/hooks/useWallets";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useNavigate } from 'react-router-dom';
 
 // Convert crypto value to NOK (Norwegian Krone)
 const convertToNOK = (cryptoValue: number, blockchain: string) => {
@@ -97,6 +98,8 @@ const Wallets = () => {
       icon: "🔵"
     }
   ];
+
+  const navigate = useNavigate();
 
   return (
     <div className="space-y-8">
@@ -342,6 +345,15 @@ const Wallets = () => {
                   >
                     <Trash2 size={14} />
                     {t('common.delete')}
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex items-center gap-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    onClick={() => navigate('/transactions', { state: { filterWalletId: selectedWallet.id } })}
+                  >
+                    <Receipt size={14} />
+                    {t('wallets.viewTransactions')}
                   </Button>
                 </div>
               </div>

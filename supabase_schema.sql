@@ -4,66 +4,34 @@
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- 1. USER TABLE
+-- Simplified USER TABLE
 CREATE TABLE IF NOT EXISTS "user" (
     user_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    email TEXT UNIQUE NOT NULL,
     first_name TEXT,
     last_name TEXT,
-    nickname TEXT,
-    friends UUID[] DEFAULT '{}',
-    friend_requests UUID[] DEFAULT '{}',
-    email TEXT UNIQUE NOT NULL,
-    wallets UUID[] DEFAULT '{}',
-    nft_list UUID[] DEFAULT '{}',
-    totals UUID[] DEFAULT '{}',
-    account_provider TEXT DEFAULT 'email',
-    account_type TEXT DEFAULT 'individual',
     account_currency TEXT DEFAULT 'USD',
-    account_region TEXT,
-    subscription_level TEXT DEFAULT 'free',
-    transaction_limit INTEGER DEFAULT 1000,
-    wallet_limit INTEGER DEFAULT 10,
-    timezone TEXT DEFAULT 'UTC',
     default_tax_type TEXT DEFAULT 'FIFO',
-    account_created_ts TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    first_time BOOLEAN DEFAULT TRUE,
-    beginning_tax_day INTEGER DEFAULT 1,
-    beginning_tax_month INTEGER DEFAULT 1,
-    lock_transactions_timestamp TIMESTAMP WITH TIME ZONE,
-    treat_airdrops_as_income BOOLEAN DEFAULT TRUE,
-    treat_forks_as_income BOOLEAN DEFAULT TRUE,
-    treat_mining_as_income BOOLEAN DEFAULT TRUE,
-    dust_transaction_threshold DECIMAL(10,2) DEFAULT 1.00,
-    transer_as_deductible BOOLEAN DEFAULT FALSE,
-    cb_refund_zcd BOOLEAN DEFAULT FALSE,
-    team UUID[] DEFAULT '{}',
-    phone_number TEXT,
-    address_one TEXT,
-    address_two TEXT,
-    city TEXT,
-    state TEXT,
-    zip TEXT
+    account_created_ts TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    -- Removed: friends, friend_requests, nft_list, totals, account_provider, account_type, account_region, subscription_level, transaction_limit, wallet_limit, timezone, first_time, beginning_tax_day, beginning_tax_month, lock_transactions_timestamp, treat_airdrops_as_income, treat_forks_as_income, treat_mining_as_income, dust_transaction_threshold, transer_as_deductible, cb_refund_zcd, team, phone_number, address_one, address_two, city, state, zip
 );
 
--- 2. ACCOUNT_TOTALS TABLE
-CREATE TABLE IF NOT EXISTS account_totals (
+-- Drop unused tables
+DROP TABLE IF EXISTS account_totals;
+DROP TABLE IF EXISTS tax_report;
+
+-- Existing WALLET, ASSET, TRANSACTION tables remain (adapt if needed)
+
+-- Add PRICE_HISTORY TABLE
+CREATE TABLE IF NOT EXISTS price_history (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID REFERENCES "user"(user_id) ON DELETE CASCADE,
-    account_total_timestamp TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    account_connected_wallets UUID[] DEFAULT '{}',
-    account_connected_nfts UUID[] DEFAULT '{}',
-    account_total_value DECIMAL(20,8) DEFAULT 0,
-    account_cost_basis DECIMAL(20,8) DEFAULT 0,
-    account_unrealized_gains DECIMAL(20,8) DEFAULT 0,
-    account_value_in DECIMAL(20,8) DEFAULT 0,
-    account_value_out DECIMAL(20,8) DEFAULT 0,
-    account_income DECIMAL(20,8) DEFAULT 0,
-    account_expenses DECIMAL(20,8) DEFAULT 0,
-    account_trading_fees DECIMAL(20,8) DEFAULT 0,
-    realized_gains DECIMAL(20,8) DEFAULT 0
+    coin_name TEXT NOT NULL,
+    timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+    price DECIMAL(20,8) NOT NULL,
+    currency TEXT DEFAULT 'USD'
 );
 
--- 3. WALLET TABLE
+-- 2. WALLET TABLE
 CREATE TABLE IF NOT EXISTS wallet (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES "user"(user_id) ON DELETE CASCADE,
@@ -132,32 +100,8 @@ CREATE TABLE IF NOT EXISTS transaction (
     warnings TEXT[]
 );
 
--- 6. TAX_REPORT TABLE
-CREATE TABLE IF NOT EXISTS tax_report (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID REFERENCES "user"(user_id) ON DELETE CASCADE,
-    year INTEGER NOT NULL,
-    transactions_amount INTEGER DEFAULT 0,
-    total_deposits INTEGER DEFAULT 0,
-    total_withdrawls INTEGER DEFAULT 0,
-    total_trades INTEGER DEFAULT 0,
-    total_transfers INTEGER DEFAULT 0,
-    capital_gains DECIMAL(20,8) DEFAULT 0,
-    other_gains DECIMAL(20,8) DEFAULT 0,
-    income DECIMAL(20,8) DEFAULT 0,
-    costs DECIMAL(20,8) DEFAULT 0,
-    gifts DECIMAL(20,8) DEFAULT 0,
-    country TEXT,
-    currency TEXT DEFAULT 'USD',
-    tax_method TEXT DEFAULT 'FIFO',
-    cost_tracking_method TEXT DEFAULT 'wallet_based',
-    report_begin TIMESTAMP WITH TIME ZONE,
-    report_end TIMESTAMP WITH TIME ZONE
-);
-
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_user_email ON "user"(email);
-CREATE INDEX IF NOT EXISTS idx_account_totals_user_id ON account_totals(user_id);
 CREATE INDEX IF NOT EXISTS idx_wallet_user_id ON wallet(user_id);
 CREATE INDEX IF NOT EXISTS idx_wallet_address ON wallet(address);
 CREATE INDEX IF NOT EXISTS idx_asset_user_id ON asset(user_id);
@@ -165,26 +109,20 @@ CREATE INDEX IF NOT EXISTS idx_asset_coin_name ON asset(coin_name);
 CREATE INDEX IF NOT EXISTS idx_transaction_user_id ON transaction(user_id);
 CREATE INDEX IF NOT EXISTS idx_transaction_wallet ON transaction(wallet);
 CREATE INDEX IF NOT EXISTS idx_transaction_date ON transaction(transaction_date);
-CREATE INDEX IF NOT EXISTS idx_tax_report_user_id ON tax_report(user_id);
-CREATE INDEX IF NOT EXISTS idx_tax_report_year ON tax_report(year);
+CREATE INDEX IF NOT EXISTS idx_price_history_coin_name ON price_history(coin_name);
 
 -- Enable Row Level Security (RLS)
 ALTER TABLE "user" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE account_totals ENABLE ROW LEVEL SECURITY;
 ALTER TABLE wallet ENABLE ROW LEVEL SECURITY;
 ALTER TABLE asset ENABLE ROW LEVEL SECURITY;
 ALTER TABLE transaction ENABLE ROW LEVEL SECURITY;
-ALTER TABLE tax_report ENABLE ROW LEVEL SECURITY;
+ALTER TABLE price_history ENABLE ROW LEVEL SECURITY;
 
 -- Create RLS policies
 -- User can only access their own data
 CREATE POLICY "Users can view own profile" ON "user" FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can update own profile" ON "user" FOR UPDATE USING (auth.uid() = user_id);
 CREATE POLICY "Users can insert own profile" ON "user" FOR INSERT WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can view own account totals" ON account_totals FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "Users can insert own account totals" ON account_totals FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "Users can update own account totals" ON account_totals FOR UPDATE USING (auth.uid() = user_id);
 
 CREATE POLICY "Users can view own wallets" ON wallet FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can insert own wallets" ON wallet FOR INSERT WITH CHECK (auth.uid() = user_id);
@@ -201,10 +139,10 @@ CREATE POLICY "Users can insert own transactions" ON transaction FOR INSERT WITH
 CREATE POLICY "Users can update own transactions" ON transaction FOR UPDATE USING (auth.uid() = user_id);
 CREATE POLICY "Users can delete own transactions" ON transaction FOR DELETE USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can view own tax reports" ON tax_report FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "Users can insert own tax reports" ON tax_report FOR INSERT WITH CHECK (auth.uid() = user_id);
-CREATE POLICY "Users can update own tax reports" ON tax_report FOR UPDATE USING (auth.uid() = user_id);
-CREATE POLICY "Users can delete own tax reports" ON tax_report FOR DELETE USING (auth.uid() = user_id);
+CREATE POLICY "Users can view own price history" ON price_history FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can insert own price history" ON price_history FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "Users can update own price history" ON price_history FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "Users can delete own price history" ON price_history FOR DELETE USING (auth.uid() = user_id);
 
 -- Create function to automatically create user profile on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()

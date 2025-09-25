@@ -43,12 +43,13 @@ interface EtherscanTransactions {
   result: EtherscanTransaction[]
 }
 
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 export class EtherscanService implements BlockchainService {
   private static baseUrl = 'https://api.etherscan.io/api'
 
-  static async testApiKey(): Promise<boolean> {
+  static async testApiKey(testAddress: string = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'): Promise<boolean> {
     // Test with a known address (Vitalik's wallet)
-    const testAddress = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
     const url = `${this.baseUrl}?module=account&action=balance&address=${testAddress}&tag=latest&apikey=${ETHERSCAN_API_KEY}`
     
     console.log('🔍 Testing Etherscan API with URL:', url)
@@ -67,6 +68,7 @@ export class EtherscanService implements BlockchainService {
         
         // Also test the transaction endpoint with the same address
         console.log('🔍 Testing transaction endpoint...')
+        await sleep(600); // Rate limit delay
         try {
           const txUrl = `${this.baseUrl}?module=account&action=txlist&address=${testAddress}&startblock=0&endblock=99999999&sort=desc&apikey=${ETHERSCAN_API_KEY}`
           const txResponse = await fetch(txUrl)
@@ -201,55 +203,53 @@ export class EtherscanService implements BlockchainService {
     }
   }
 
+  static async getLatestBlock(): Promise<number> {
+    const url = `${this.baseUrl}?module=proxy&action=eth_blockNumber&apikey=${ETHERSCAN_API_KEY}`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.result) {
+        return parseInt(data.result, 16); // Hex to decimal
+      }
+      return 0; // Instead of 20000000, to avoid placeholders
+    } catch (error) {
+      console.error('Error fetching latest block:', error);
+      return 0; // Instead of 20000000, to avoid placeholders
+    }
+  }
+
   static async getWalletTransactions(address: string, startBlock = 0, endBlock = 99999999): Promise<EtherscanTransaction[]> {
     if (!ETHERSCAN_API_KEY) {
-      throw new Error('Etherscan API key not found. Please add VITE_PUBLIC_ETHERSCAN_ID to your .env.local file')
+      throw new Error('Etherscan API key not found. Please add VITE_PUBLIC_ETHERSCAN_ID to your .env.local file');
     }
 
-    // Try with a smaller block range first to avoid rate limiting issues
-    const tryWithSmallerRange = async (start: number, end: number): Promise<EtherscanTransaction[]> => {
-      const url = `${this.baseUrl}?module=account&action=txlist&address=${address}&startblock=${start}&endblock=${end}&sort=desc&apikey=${ETHERSCAN_API_KEY}`
+    let allTransactions: EtherscanTransaction[] = [];
+    let page = 1;
+    const pageSize = 10000; // Etherscan max per call
+
+    while (true) {
+      const url = `${this.baseUrl}?module=account&action=txlist&address=${address}&startblock=${startBlock}&endblock=${endBlock}&page=${page}&offset=${pageSize}&sort=desc&apikey=${ETHERSCAN_API_KEY}`;
       
-      console.log(`🔍 Trying block range ${start} to ${end}...`)
-      console.log('🔍 URL:', url)
+      console.log(`🔍 Fetching page ${page}: ${url}`);
+      const response = await fetch(url);
+      const data: EtherscanTransactions = await response.json();
       
-      const response = await fetch(url)
-      const data: EtherscanTransactions = await response.json()
-      
-      console.log(`📊 Response for block range ${start}-${end}:`, data)
-      
-      if (data.status === '1') {
-        console.log(`✅ Success with block range ${start} to ${end}, found ${data.result?.length || 0} transactions`)
-        return data.result || []
-      } else if (data.message === 'No transactions found') {
-        console.log(`ℹ️ No transactions found for address ${address} in block range ${start}-${end}`)
-        return []
-      } else {
-        throw new Error(`Block range ${start}-${end} failed: ${data.message}`)
+      if (data.status !== '1') {
+        if (data.message === 'No transactions found') break;
+        throw new Error(`Etherscan API error: ${data.message}`);
       }
+      
+      allTransactions = [...allTransactions, ...data.result];
+      console.log(`📊 Fetched ${data.result.length} transactions on page ${page}. Total so far: ${allTransactions.length}`);
+      
+      if (data.result.length < pageSize) break; // No more pages
+      
+      page++;
+      await sleep(600); // Rate limit: <2/sec
     }
 
-    try {
-      // First try with a very small recent block range
-      const currentBlock = 19000000 // Approximate current Ethereum block
-      const recentStart = Math.max(0, currentBlock - 1000) // Last 1k blocks
-      
-      try {
-        return await tryWithSmallerRange(recentStart, currentBlock)
-      } catch (recentError) {
-        console.log('⚠️ Recent block range failed, trying medium range...')
-        const mediumStart = Math.max(0, currentBlock - 10000) // Last 10k blocks
-        try {
-          return await tryWithSmallerRange(mediumStart, currentBlock)
-        } catch (mediumError) {
-          console.log('⚠️ Medium block range failed, trying full range...')
-          return await tryWithSmallerRange(startBlock, endBlock)
-        }
-      }
-    } catch (error) {
-      console.error('❌ All transaction fetch attempts failed:', error)
-      throw error
-    }
+    console.log(`✅ Total transactions fetched: ${allTransactions.length}`);
+    return allTransactions;
   }
 
   static async getInternalTransactions(address: string, startBlock = 0, endBlock = 99999999): Promise<EtherscanTransaction[]> {
